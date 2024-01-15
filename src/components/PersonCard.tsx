@@ -1,10 +1,10 @@
 import React from 'react';
-import Person from '../utils/types/';
+import {Person} from '../utils/types/';
 
-const PersonCard: React.FC = () => {
+const PersonCard: React.FC<{person: Person}> = ({ person }) => {
   return (
-    <div>
-
+    <div className='ml-5 '>
+      {person.nom}
     </div>
   );
 };
