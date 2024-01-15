@@ -6,7 +6,13 @@
   "equipe": "Pôle AI",
   "agence": "Rennes",
   "photo_pro": "https://trombi.6tmphp.fr/images/pro/AHMANE-Hafid.jpg",
-  "photo_fun": "https://trombi.6tmphp.fr/images/fun/AHMANE-Hafid.jpg"
+  "photo_fun": "https://trombi.6tmphp.fr/images/fun/AHMANE-Hafid.jpg",
+  "description": "Hafid est un développeur qui aime les défis. Il est toujours prêt à relever de nouveaux challenges. Il est également très curieux et aime découvrir de nouvelles technologies. Il est très à l'aise avec les langages PHP, Javascript et Python.",
+  "contact": {
+    "linkedin": "https://www.linkedin.com/in/hafid-ahmane-1b1b0b1a4/",
+    "tel": "06 50 50 50 50",
+    "email": "hafid.ahmane@6tm.com"
+  }
  },
  {
   "nom": "ANDRES",

@@ -1,14 +1,17 @@
 import React from 'react';
 import {Person} from '../utils/types/';
 import logo from '../assets/6tm_logo.jpeg';
+import { useNavigate } from 'react-router-dom';
 
-const PersonCard: React.FC<{person: Person}> = ({ person }) => {
+const PersonCard: React.FC<{person: Person, id: number }> = ({ person, id }) => {
+  const navigate = useNavigate();
 
   return (
-    <div className='relative group'>
-      <div className='bg-secondary-500 pl-2 pb-2 rounded-lg absolute w-full
-      h-full -left-2 -bottom-2 -z-10
-      transition-all'/>
+    <div className='relative group w-fit' onClick={() => {
+      navigate(`/list/${id}`);
+    }}>
+      <div className='bg-secondary-500 pl-2 pb-2 rounded-lg absolute w-full h-full
+      -left-2 -bottom-2 -z-10 transition-all'/>
       <div
         className='w-52 rounded-lg overflow-hidden cursor-pointer transition-all
         z-40 relative h-full border-2 border-secondary-500 group-hover:scale-102'

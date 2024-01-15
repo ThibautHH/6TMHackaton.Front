@@ -1,6 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import PersonCard from '../components/PersonCard';
-import data from './data.json';
 
 const Home: FunctionComponent = () => {
   // JS
@@ -8,7 +6,6 @@ const Home: FunctionComponent = () => {
     // HTML
     <>
       <h1>Home</h1>
-      <PersonCard person={data[0]} />
     </>
   );
 };

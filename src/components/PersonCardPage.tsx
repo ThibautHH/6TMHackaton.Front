@@ -5,11 +5,11 @@ import logo from '../assets/6tm_logo.jpeg';
 const PersonCardPage: React.FC<{person: Person}> = ({ person }) => {
 
   return (
-    <div className='relative group w-fit'>
+    <div className='relative group w-fit h-fit'>
       <div className='bg-secondary-500 pl-2 pb-2 rounded-lg absolute w-full
-      h-full -left-2 -bottom-2 -z-10 transition-all'/>
+      h-full -left-3 -bottom-3 -z-10 transition-all'/>
       <div
-        className='w-96 rounded-lg overflow-hidden cursor-pointer transition-all
+        className='w-56 md:w-96 rounded-lg overflow-hidden transition-all
         z-40 relative h-full border-2 border-secondary-500 group-hover:scale-102'
       >
         {person.photo_fun && person.photo_pro ? (
