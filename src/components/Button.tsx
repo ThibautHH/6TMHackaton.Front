@@ -27,6 +27,11 @@ const Button: FC<ButtonProps> = ({
     border-secondary-500 hover:disabled:text-black\
     disabled:border-secondary-500';
     break;
+  case 'invert':
+    style += 'bg-white hover:bg-secondary-500 shadow-sm \
+    text-black disabled:hover:bg-white border-2 \
+    border-black hover:disabled:text-secondary-500';
+    break;
   }
   return (
     <button className={`items-center text-base w-fit
