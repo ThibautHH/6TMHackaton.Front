@@ -6,14 +6,28 @@ const PersonCard: React.FC<{person: Person}> = ({ person }) => {
 
   return (
     <div
-      className='w-52 border-2 border-black rounded-lg overflow-hidden'
+      className='w-52 border-2 border-black rounded-lg overflow-hidden
+      shadow-xl cursor-pointer'
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <img
-        src={isHover ? person.photo_fun : person.photo_pro}
-        alt={person.nom}
-      />
+      {person.photo_fun && person.photo_pro ? (
+        <>
+          <img
+            src={person.photo_pro}
+            alt={person.nom}
+            className={`${isHover ? 'hidden' : 'block'}`}
+          />
+          <img
+            src={person.photo_fun}
+            alt={person.nom}
+            className={`${isHover ? 'block' : 'hidden'}`}
+          />
+        </>
+      ) : (
+        <div>
+        </div>
+      )}
     </div>
   );
 };
