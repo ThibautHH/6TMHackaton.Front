@@ -6,9 +6,9 @@ interface LayoutProps {
 
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
   return (
-    <div className='bg-tertiary-600 h-fit min-h-screen flex flex-col relative'>
+    <div className='bg-secondary-100 file:h-fit min-h-screen flex flex-col relative'>
       <div className='flex flex-col flex-1 z-[2] items-center'>
-        <div className='max-w-4xl px-5 py-10'>
+        <div className='max-w-6xl px-5 py-10'>
           {children}
         </div>
       </div>
