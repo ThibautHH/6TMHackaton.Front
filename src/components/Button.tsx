@@ -32,6 +32,10 @@ const Button: FC<ButtonProps> = ({
     text-black disabled:hover:bg-white border-2 \
     border-black hover:disabled:text-secondary-500';
     break;
+  case 'text':
+    style += 'text-black-900 hover:text-opacity-80 disabled:hover:text-secondary-500 \
+    px-0';
+    break;
   }
   return (
     <button className={`items-center text-base w-fit

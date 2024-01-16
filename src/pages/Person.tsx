@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import data from './data.json';
 import {
   Button,
@@ -18,6 +18,7 @@ const PersonPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(true);
   const [person, setPerson] = useState<Person | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id && !isNaN(parseInt(id)))
@@ -26,12 +27,23 @@ const PersonPage: FunctionComponent = () => {
   }
   , [id]);
 
+  let otherPeople = data
+    .filter((p) => p.equipe === person?.equipe)
+    .filter((p) => p.nom !== person?.nom && p.prenom !== person?.prenom)
+    .slice(0, 8);
+
+  if (otherPeople.length <= 0)
+    otherPeople = data
+      .filter((p) => p.agence === person?.agence)
+      .filter((p) => p.nom !== person?.nom && p.prenom !== person?.prenom)
+      .slice(0, 8);
+
   if (loading)
     return (
       <Layout>
         <div className='flex flex-col md:flex-row relative w-full h-full'>
           <PersonCardPageSkeleton />
-          <div className='flex flex-col md:ml-5 font-medium mt-5 md:mt-0'>
+          <div className='flex flex-col md:ml-5 font-medium mt-5 md:mt-0 animate-pulse'>
             <h1 className='text-4xl md:text-6xl font-bold'>
               Loading...
             </h1>
@@ -58,14 +70,6 @@ const PersonPage: FunctionComponent = () => {
             <p className='font-regular mt-5 text-lg md:text-xl'>
               Loading...
             </p>
-            <div className='flex flex-col gap-2 mt-5'>
-              <Button type='invert' link='#'>
-                Loading...
-              </Button>
-              <Button type='invert' link='#'>
-                Loading...
-              </Button>
-            </div>
           </div>
         </div>
       </Layout>
@@ -73,21 +77,35 @@ const PersonPage: FunctionComponent = () => {
 
   if (!id || isNaN(parseInt(id)) || !person)
     return (
-      <div>
-        <h1>PersonPage</h1>
-        <p>Person not found</p>
-      </div>
+      <Layout>
+        <div className='flex flex-col relative py-52'>
+          <h1 className='text-6xl font-bold'>
+            Erreur 404
+          </h1>
+          <p className='text-2xl font-regular'>
+            Oups, nous n'avons pas trouvé la personne que vous cherchiez.
+            N'hésitez pas à consulter nos autres pages dans la navigation.
+            Vous y trouverez peut-être votre bonheur.
+          </p>
+          <Button type='invert' className='mt-8' onClick={() => navigate('/list')}>
+            Retour au trombinoscope
+          </Button>
+        </div>
+      </Layout>
     );
 
   return (
     <Layout>
-      <div className='flex flex-col md:flex-row relative w-full h-full'>
+      <Button type='text' onClick={() => navigate('/list')}>
+        &larr; Retour au trombinoscope
+      </Button>
+      <div className='flex flex-col md:flex-row relative w-full h-full mt-5'>
         <PersonCardPage person={data[parseInt(id)]} />
         <div className='flex flex-col md:ml-5 font-medium mt-5 md:mt-0'>
           <h1 className='text-4xl md:text-6xl font-bold'>
             {person.prenom} {person.nom}
           </h1>
-          <div className='flex flex-col md:flex-row gap-x-5'>
+          <div className='flex flex-col md:flex-row gap-x-5 mt-5'>
             <div className='flex flex-row items-center'>
               <MapPinIcon className='w-4 h-4 md:w-5 md:h-5 mr-1' />
               <p className='text-base md:text-lg'>
@@ -129,14 +147,9 @@ const PersonPage: FunctionComponent = () => {
         <h1 className='text-4xl font-bold col-span-full'>
           D'autres personnes qui pourraient vous intéresser
         </h1>
-        {data
-          .filter((p) => p.equipe === person.equipe)
-          // TODO: change to id
-          .filter((p) => p.nom !== person.nom && p.prenom !== person.prenom)
-          .slice(0, 10).map((p, i) => (
-            <PersonCard key={p.nom} person={p} id={i} />
-          ))
-        }
+        {otherPeople.map((p, i) => (
+          <PersonCard key={p.nom} person={p} id={i} />
+        ))}
       </div>
     </Layout>
   );
