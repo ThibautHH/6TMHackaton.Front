@@ -60,7 +60,8 @@ const Header: React.FC = () => {
       </div>
       <Menu as='div' className='relative inline-block lg:hidden text-left'>
         <Menu.Button>
-          <Bars4Icon className='w-6 h-6 text-black-0' />
+          <Bars4Icon className={`w-6 h-6
+          ${isScrolled ? 'text-black-900' : 'text-black-25'}`} />
         </Menu.Button>
         <Menu.Items className='absolute right-0 w-64 mt-2 origin-top-right
         bg-black-0 gap-4 rounded-md shadow-lg p-4

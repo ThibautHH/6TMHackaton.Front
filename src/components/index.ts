@@ -4,6 +4,7 @@ import PersonCardPage from './PersonCardPage';
 import PersonCardPageSkeleton from './PersonCardPageSkeleton';
 import Filter from './Filter';
 import Input from './Input';
+import CheckBox from './CheckBox';
 
 export {
   Button,
@@ -11,5 +12,6 @@ export {
   PersonCardPage,
   PersonCardPageSkeleton,
   Filter,
-  Input
+  Input,
+  CheckBox
 };

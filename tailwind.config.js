@@ -41,7 +41,19 @@ export const theme = {
       1: '#CE6CA7',
       2: '#E2AACC'
     },
-    white: '#FFFFFF'
+    white: '#FFFFFF',
+    red: {
+      0: '#ffffff',
+      100: '#FFEBEE',
+      200: '#FFCDD2',
+      300: '#EF9A9A',
+      400: '#E57373',
+      500: '#EF5350',
+      600: '#F44336',
+      700: '#E53935',
+      800: '#D32F2F',
+      900: '#B71C1C'
+    }
   },
   fontFamily: {
     black: ['Poppins-Black', 'sans-serif'],
