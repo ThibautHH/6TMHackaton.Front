@@ -1,7 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import data from './data.json';
-import { Button, PersonCard, PersonCardPage } from '../components';
+import {
+  Button,
+  PersonCard,
+  PersonCardPage,
+  PersonCardPageSkeleton
+} from '../components';
 import Layout from './Layout';
 import { Person } from '../utils/types';
 import {
@@ -11,13 +16,60 @@ import {
 
 const PersonPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
+  const [loading, setLoading] = useState<boolean>(true);
   const [person, setPerson] = useState<Person | null>(null);
 
   useEffect(() => {
     if (id && !isNaN(parseInt(id)))
       setPerson(data[parseInt(id)]);
+    setLoading(false);
   }
   , [id]);
+
+  if (loading)
+    return (
+      <Layout>
+        <div className='flex flex-col md:flex-row relative w-full h-full'>
+          <PersonCardPageSkeleton />
+          <div className='flex flex-col md:ml-5 font-medium mt-5 md:mt-0'>
+            <h1 className='text-4xl md:text-6xl font-bold'>
+              Loading...
+            </h1>
+            <div className='flex flex-col md:flex-row gap-x-5'>
+              <div className='flex flex-row items-center'>
+                <MapPinIcon className='w-4 h-4 md:w-5 md:h-5 mr-1' />
+                <p className='text-base md:text-lg'>
+                  Loading...
+                </p>
+              </div>
+              <div className='flex flex-row items-center'>
+                <UserGroupIcon className='w-4 h-4 md:w-5 md:h-5 mr-1' />
+                <p className='text-base md:text-lg'>
+                  Loading...
+                </p>
+              </div>
+              <div className='flex flex-row items-center'>
+                <ComputerDesktopIcon className='w-4 h-4 md:w-5 md:h-5 mr-1' />
+                <p className='text-base md:text-lg'>
+                  Loading...
+                </p>
+              </div>
+            </div>
+            <p className='font-regular mt-5 text-lg md:text-xl'>
+              Loading...
+            </p>
+            <div className='flex flex-col gap-2 mt-5'>
+              <Button type='invert' link='#'>
+                Loading...
+              </Button>
+              <Button type='invert' link='#'>
+                Loading...
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
 
   if (!id || isNaN(parseInt(id)) || !person)
     return (
@@ -79,6 +131,8 @@ const PersonPage: FunctionComponent = () => {
         </h1>
         {data
           .filter((p) => p.equipe === person.equipe)
+          // TODO: change to id
+          .filter((p) => p.nom !== person.nom && p.prenom !== person.prenom)
           .slice(0, 10).map((p, i) => (
             <PersonCard key={p.nom} person={p} id={i} />
           ))
