@@ -13,7 +13,34 @@ export const theme = {
       500: '#d0ffe9'
     },
     tertiary: '#0D1414',
-    black: '#000000',
+    black: {
+      0: '#FFFFFF',
+      25: '#FCFCFE',
+      50: '#F9FAFB',
+      100: '#F1F4F7',
+      200: '#E9ECF0',
+      300: '#D9DCDF',
+      400: '#a1a4a9',
+      500: '#72747A',
+      600: '#50565E',
+      700: '#3A424E',
+      800: '#414141',
+      900: '#0D1414',
+      1000: '#000'
+    },
+    fuze: {
+      1: '#5B4A98',
+      2: '#7f56d9',
+      3: '#C4C2FF'
+    },
+    cyber: {
+      1: '#95DAF0',
+      2: '#C2EEFB'
+    },
+    agri: {
+      1: '#CE6CA7',
+      2: '#E2AACC'
+    },
     white: '#FFFFFF'
   },
   fontFamily: {
