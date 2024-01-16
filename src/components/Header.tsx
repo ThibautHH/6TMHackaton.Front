@@ -3,6 +3,7 @@ import logoBlack from '../assets/logo-6tm-black.png';
 import logoWhite from '../assets/logo-6tm-white.png';
 import Button from './Button';
 import { Menu } from '@headlessui/react';
+
 import {
   Bars4Icon
 } from '@heroicons/react/24/solid';
@@ -27,10 +28,11 @@ const Header: React.FC = () => {
       className={`flex justify-between p-5 w-full z-50 border border-s-0 fixed
       transition-background duration-500 items-center px-10 xl:px-40
       ${isScrolled ? 'bg-white' : 'bg-black-900'}`}>
-      <img
-        className='w-28 h-full'
-        src={isScrolled ? logoBlack : logoWhite}
-        alt='logo'/>
+      <a href='https://www.6tm.com'>
+        <img
+          className='w-28 h-full'
+          src={isScrolled ? logoBlack : logoWhite}
+          alt='logo'/></a>
       <div className="items-center hidden lg:flex font-regular">
         <a
           href='link-trombi'
