@@ -20,7 +20,7 @@ const Header: React.FC = () => {
 
   return (
     <div
-      className={`flex justify-between p-4 w-full z-50 border border-s-0 fixed
+      className={`flex justify-between p-5 w-full z-50 border border-s-0 fixed
       transition-background duration-500 ${isScrolled ? 'bg-white' : 'bg-black'}`}>
       <img
         className='w-28 ml-60'
