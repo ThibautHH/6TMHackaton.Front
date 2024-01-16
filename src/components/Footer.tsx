@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import logoWhite from '../assets/logo-6tm-white.png';
 import linkedin from '../assets/linkedin.svg';
 import youtube from '../assets/ytb.svg';
+import { HeartIcon } from '@heroicons/react/24/solid';
 
 const Footer: FunctionComponent = () => {
   return (
@@ -99,7 +100,7 @@ const Footer: FunctionComponent = () => {
       </div>
       <div className='flex flex-col md:flex-row justify-center gap-x-1 px-9 py-4'>
         <span className='font'>© 2021 6TM - Tous droits réservés -
-        Conçu avec à Rennes, Nantes, Angers et Paris
+        Conçu avec <HeartIcon className='w-5 h-5 inline-block'/> à Rennes, Nantes, Angers et Paris
         </span>
         <a href='https://www.6tm.com/mentions-legales/' className={
           'transition-opacity hover:opacity-70 font'}>- Mentions légales
