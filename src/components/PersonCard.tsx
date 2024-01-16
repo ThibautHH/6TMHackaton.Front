@@ -7,7 +7,7 @@ const PersonCard: React.FC<{person: Person, id: number }> = ({ person, id }) => 
   const navigate = useNavigate();
 
   return (
-    <div className='relative group w-fit' onClick={() => {
+    <div className='relative group w-fit h-80' onClick={() => {
       navigate(`/list/${id}`);
     }}>
       <div className='bg-secondary-500 pl-2 pb-2 rounded-lg absolute w-full h-full
