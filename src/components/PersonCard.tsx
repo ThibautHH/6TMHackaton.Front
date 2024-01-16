@@ -22,11 +22,13 @@ const PersonCard: React.FC<{person: Person, id: number }> = ({ person, id }) => 
               src={person.photo_pro}
               alt={person.nom}
               className='group-hover:hidden flex mb-5'
+              loading='lazy'
             />
             <img
               src={person.photo_fun}
               alt={person.nom}
               className='group-hover:flex hidden mb-5'
+              loading='lazy'
             />
           </>
         ) : (

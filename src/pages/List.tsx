@@ -42,7 +42,6 @@ const List: FunctionComponent = () => {
           jobs.length === 0 ||
           jobs.some((job) => job.name === person.poste)
         )
-        .slice(0, 12)
     );
   }, [input, agences, teams, jobs]);
 
