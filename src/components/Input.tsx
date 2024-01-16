@@ -52,7 +52,7 @@ const Input: FunctionComponent<InputProps> = ({
         type={type}
         id={id}
         className={`border text-sm rounded-lg block w-full p-2.5 ${className}
-        bg-black-100 border-black-200/50 placeholder-black-400 text-black-900
+        bg-black-100 border-black-200 placeholder-black-400 text-black-900
         focus:ring-secondary-500 outline-none focus:border-secondary-500
         disabled:opacity-50 border-2`}
         placeholder={placeholder}

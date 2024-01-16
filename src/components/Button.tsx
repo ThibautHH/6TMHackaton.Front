@@ -16,7 +16,7 @@ const Button: FC<ButtonProps> = ({
 
   switch (type) {
   case 'primary':
-    style += 'bg-primary hover:bg-secondary-500 shadow-sm \
+    style += 'bg-primary hover:bg-secondary-500 shadow-sm px-10 \
     disabled:hover:text-secondary-500 text-secondary-500 hover:text-black \
     border-primary hover:border-secondary-500 disabled:hover:bg-primary \
     border-2 disabled:border-primary';
@@ -24,22 +24,21 @@ const Button: FC<ButtonProps> = ({
   case 'secondary':
     style += 'bg-secondary-500 hover:bg-tertiary shadow-sm \
     text-black hover:text-white disabled:hover:bg-secondary-500 border-2 \
-    border-secondary-500 hover:disabled:text-black\
+    border-secondary-500 hover:disabled:text-black px-10\
     disabled:border-secondary-500';
     break;
   case 'invert':
     style += 'bg-white hover:bg-secondary-500 shadow-sm \
-    text-black disabled:hover:bg-white border-2 \
+    text-black disabled:hover:bg-white border-2 px-10 \
     border-black hover:disabled:text-secondary-500';
     break;
   case 'text':
-    style += 'text-black-900 hover:text-opacity-80 disabled:hover:text-secondary-500 \
-    px-0';
+    style += 'text-black-900 hover:text-opacity-80 disabled:hover:text-secondary-500';
     break;
   }
   return (
     <button className={`items-center text-base w-fit
-    font-medium py-3 px-10 h-fit rounded-lg flex flex-row justify-center
+    font-medium py-3 h-fit rounded-lg flex flex-row justify-center
     disabled:opacity-60 disabled:cursor-not-allowed min-h-10 ${style}
     transition duration-200 ease-in-out ${className}`}
     disabled={disabled || false}

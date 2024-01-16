@@ -142,8 +142,8 @@ const PersonPage: FunctionComponent = () => {
           </div>
         </div>
       </div>
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-      gap-5 mt-24'>
+      <div className='gap-5 mx-auto flex flex-col md:flex-row flex-wrap mt-20
+      justify-between'>
         <h1 className='text-4xl font-bold col-span-full'>
           D'autres personnes qui pourraient vous intéresser
         </h1>

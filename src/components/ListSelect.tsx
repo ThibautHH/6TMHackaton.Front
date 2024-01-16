@@ -1,9 +1,10 @@
 import { Fragment, FunctionComponent } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon } from '@heroicons/react/24/solid';
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid';
 
 interface ListSelectProps {
   selectedValues: { id: number, name: string }[];
+  // eslint-disable-next-line no-unused-vars
   setSelectedValues: (values: { id: number, name: string }[]) => void;
   values: { id: number, name: string }[];
 }
@@ -14,11 +15,12 @@ const ListSelect: FunctionComponent<ListSelectProps> = ({
   return (
     <div className='relative'>
       <Listbox value={selectedValues} onChange={setSelectedValues} multiple>
-        <Listbox.Button className='relative border text-sm rounded-lg block w-full
-          p-2.5 bg-black-100 border-black-200/50 placeholder-black-400 text-black-900
-          focus:ring-secondary-500 outline-none focus:border-secondary-500
-          disabled:opacity-50 h-11'>
+        <Listbox.Button className='relative border-2 text-sm rounded-lg block w-full
+          p-2.5 bg-black-100 border-black-200 placeholder-black-400 text-black-900
+          focus:ring-secondary-500 outline-none focus:border-secondary-500 truncate pr-8
+          disabled:opacity-50 h-11 text-left font-regular overflow-hidden leading-6'>
           {selectedValues.map((value) => value.name).join(', ')}
+          <ChevronUpDownIcon className='w-5 h-5 absolute right-2 top-2.5' />
         </Listbox.Button>
         <Transition
           as={Fragment}
@@ -27,8 +29,8 @@ const ListSelect: FunctionComponent<ListSelectProps> = ({
           leaveTo='opacity-0'
         >
           <Listbox.Options className='absolute mt-1 max-h-60 overflow-auto
-              rounded-md bg-black-100 border-black-200/50 p-1 text-base shadow-lg
-              focus:outline-none sm:text-sm z-10 w-full'>
+              rounded-md bg-black-100 border-black-200 p-1 text-base shadow-lg
+              focus:outline-none sm:text-sm z-10 w-full border-2'>
             {values.map((value) => (
               <Listbox.Option key={value.id} value={value} className={({ active }) =>
                 `relative cursor-pointer select-none pr-4 font-medium
@@ -37,14 +39,12 @@ const ListSelect: FunctionComponent<ListSelectProps> = ({
               }>
                 {({ selected }) => (
                   <>
-                    <span className='block truncate'>
+                    <span className='block truncate pr-5'>
                       {value.name}
-                      {selected && (
-                        <CheckIcon
-                          className='w-5 h-5 absolute right-2 top-2.5'
-                        />
-                      )}
                     </span>
+                    {selected && (
+                      <CheckIcon className='w-5 h-5 absolute right-2 top-2.5' />
+                    )}
                   </>
                 )}
               </Listbox.Option>
