@@ -73,7 +73,7 @@ const PopHover: FunctionComponent<PopHoverProps> = ({ values }) => {
   });
 
   return (
-    <Popover className='relative' ref={ref}>
+    <Popover className='relative w-full' ref={ref}>
       <button className='text-black-900 cursor-pointer p-1 hover:bg-black-300
       rounded-lg transition-all duration-100 outline-none z-10 bg-black-200'
       onClick={() => setOpen(!open)}>
@@ -82,7 +82,7 @@ const PopHover: FunctionComponent<PopHoverProps> = ({ values }) => {
       {open && (
         <Popover.Panel static className='absolute mt-1 max-h-60 overflow-auto
         rounded-md bg-black-100 border-black-200 p-1 text-base shadow-lg
-        focus:outline-none sm:text-sm z-10 w-full border-2'>
+        focus:outline-none sm:text-sm z-10 w-full border-2 min-w-52'>
           {values.filter((value) => !value.hidden).map((value, index) => (
             <div key={index}>
               {value.separator && (

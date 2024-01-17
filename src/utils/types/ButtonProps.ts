@@ -1,5 +1,5 @@
 interface ButtonProps {
-  type: 'primary' | 'secondary' | 'invert' | 'text';
+  type: 'primary' | 'secondary' | 'invert' | 'text' | 'danger';
   link?: string;
   className?: string;
   children?: React.ReactNode;

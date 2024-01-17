@@ -6,6 +6,8 @@ import Filter from './Filter';
 import Input from './Input';
 import CheckBox from './CheckBox';
 import Dropdown from './Dropdown';
+import UpdateUserModal from './modals/UpdateUserModal';
+import CreateInput from './modals/CreateInput';
 
 export {
   Button,
@@ -15,5 +17,7 @@ export {
   Filter,
   Input,
   CheckBox,
-  Dropdown
+  Dropdown,
+  UpdateUserModal,
+  CreateInput
 };
