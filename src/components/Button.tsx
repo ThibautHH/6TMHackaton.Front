@@ -17,19 +17,19 @@ const Button: FC<ButtonProps> = ({
   switch (type) {
   case 'primary':
     style += 'bg-primary hover:bg-secondary-500 shadow-sm px-10 \
-    disabled:hover:text-secondary-500 text-secondary-500 hover:text-black \
+    disabled:hover:text-secondary-500 text-secondary-500 hover:text-black-900 \
     border-primary hover:border-secondary-500 disabled:hover:bg-primary \
     border-2 disabled:border-primary';
     break;
   case 'secondary':
     style += 'bg-secondary-500 hover:bg-tertiary shadow-sm \
-    text-black hover:text-white disabled:hover:bg-secondary-500 border-2 \
-    border-secondary-500 hover:disabled:text-black px-10\
+    text-black-900 hover:text-white disabled:hover:bg-secondary-500 border-2 \
+    border-secondary-500 hover:disabled:text-black-900 px-10\
     disabled:border-secondary-500';
     break;
   case 'invert':
     style += 'bg-white hover:bg-secondary-500 shadow-sm \
-    text-black disabled:hover:bg-white border-2 px-10 \
+    text-black-900 disabled:hover:bg-white border-2 px-10 \
     border-black hover:disabled:text-secondary-500';
     break;
   case 'text':
@@ -38,7 +38,7 @@ const Button: FC<ButtonProps> = ({
   }
   return (
     <button className={`items-center text-base w-fit
-    font-medium py-3 h-fit rounded-lg flex flex-row justify-center
+    font-medium py-3 h-11 rounded-lg flex flex-row justify-center
     disabled:opacity-60 disabled:cursor-not-allowed min-h-10 ${style}
     transition duration-200 ease-in-out ${className}`}
     disabled={disabled || false}
