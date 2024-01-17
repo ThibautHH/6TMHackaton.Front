@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Users from '../../types/User';
 
-export async function getUsers(data: Users) {
+export async function getUser(data: Users) {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,

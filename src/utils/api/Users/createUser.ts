@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Users from '../../types/User';
 
-export async function createUsers(data: Users) {
+export async function createUser(data: Users) {
   const config = {
     method: 'post',
     maxBodyLength: Infinity,

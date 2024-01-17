@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Team } from '../../types';
 
-export async function createTeams(data: Team) {
+export async function createTeam(data: Team) {
   const config = {
     method: 'post',
     maxBodyLength: Infinity,

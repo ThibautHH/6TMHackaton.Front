@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Team } from '../../types';
 
-export async function putTeams(id: string, data: Team) {
+export async function putTeam(id: string, data: Team) {
   const config = {
     method: 'put',
     maxBodyLength: Infinity,

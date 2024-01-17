@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Users from '../../types/User';
 
-export async function deleteUsers(data: Users) {
+export async function deleteUser(data: Users) {
   const config = {
     method: 'delete',
     maxBodyLength: Infinity,

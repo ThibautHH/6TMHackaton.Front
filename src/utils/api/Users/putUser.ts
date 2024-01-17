@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getUsers(id: string) {
+export async function putUsers(id: string) {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,

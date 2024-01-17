@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function deleteTeams(id: string) {
+export async function deleteTeam(id: string) {
   const config = {
     method: 'delete',
     maxBodyLength: Infinity,
