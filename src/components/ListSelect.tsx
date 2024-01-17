@@ -15,10 +15,11 @@ const ListSelect: FunctionComponent<ListSelectProps> = ({
   return (
     <div className='relative'>
       <Listbox value={selectedValues} onChange={setSelectedValues} multiple>
-        <Listbox.Button className='relative border-2 text-sm rounded-lg block w-full
+        <Listbox.Button className='relative border-2 text-sm rounded-lg w-full
           p-2.5 bg-black-100 border-black-200 placeholder-black-400 text-black-900
           focus:ring-secondary-500 outline-none focus:border-secondary-500 truncate pr-8
-          disabled:opacity-50 h-11 text-left font-regular overflow-hidden leading-6'>
+          disabled:opacity-50 h-11 text-left font-regular overflow-hidden leading-6
+          flex items-center'>
           {selectedValues.map((value) => value.name).join(', ')}
           <ChevronUpDownIcon className='w-5 h-5 absolute right-2 top-2.5' />
         </Listbox.Button>
