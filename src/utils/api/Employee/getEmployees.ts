@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Employee from '../../types/Employee';
 
 export async function getEmployees() {
   const config = {

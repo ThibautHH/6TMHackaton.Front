@@ -1,11 +1,10 @@
 import axios from 'axios';
-import Users from '../../types/Users';
 
-export async function getUsers() {
+export async function getUsers(id: string) {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/`,
+    url: `${process.env.REACT_APP_BASE_URL}/${id}`,
     headers: {
       'Content-Type': 'application/json'
     }
@@ -15,5 +14,5 @@ export async function getUsers() {
   }).catch((error) => {
     return error.response;
   });
-  return response as Users[];
+  return response;
 }

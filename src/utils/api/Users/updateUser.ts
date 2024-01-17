@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Users from '../../types/Users';
+import Users from '../../types/User';
 
 export async function updateUsers(data: Users) {
   const config = {
@@ -15,5 +15,5 @@ export async function updateUsers(data: Users) {
   }).catch((error) => {
     return error.response;
   });
-  return response as Users;
+  return response;
 }
