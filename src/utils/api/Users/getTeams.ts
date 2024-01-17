@@ -1,11 +1,11 @@
 import axios from 'axios';
-import Premise from '../../types/Premise';
+import Users from '../../types/Users';
 
-export async function updatePremise(data: Premise) {
+export async function getUsers() {
   const config = {
-    method: 'patch',
+    method: 'get',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/${data}`,
+    url: `${process.env.REACT_APP_BASE_URL}/`,
     headers: {
       'Content-Type': 'application/json'
     }
@@ -15,5 +15,5 @@ export async function updatePremise(data: Premise) {
   }).catch((error) => {
     return error.response;
   });
-  return response as Premise;
+  return response as Users[];
 }

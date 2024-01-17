@@ -1,7 +1,7 @@
 import axios from 'axios';
-import Premise from '../../types/Premise';
+import Teams from '../../types/Teams';
 
-export async function updatePremise(data: Premise) {
+export async function updateTeams(data: Teams) {
   const config = {
     method: 'patch',
     maxBodyLength: Infinity,
@@ -15,5 +15,5 @@ export async function updatePremise(data: Premise) {
   }).catch((error) => {
     return error.response;
   });
-  return response as Premise;
+  return response as Teams;
 }

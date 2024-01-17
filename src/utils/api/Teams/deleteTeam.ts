@@ -1,9 +1,9 @@
 import axios from 'axios';
-import Premise from '../../types/Premise';
+import Teams from '../../types/Teams';
 
-export async function updatePremise(data: Premise) {
+export async function deleteTeams(data: Teams) {
   const config = {
-    method: 'patch',
+    method: 'delete',
     maxBodyLength: Infinity,
     url: `${process.env.REACT_APP_BASE_URL}/${data}`,
     headers: {
@@ -15,5 +15,5 @@ export async function updatePremise(data: Premise) {
   }).catch((error) => {
     return error.response;
   });
-  return response as Premise;
+  return response as Teams;
 }
