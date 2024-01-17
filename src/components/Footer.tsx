@@ -6,7 +6,7 @@ import { HeartIcon } from '@heroicons/react/24/solid';
 
 const Footer: FunctionComponent = () => {
   return (
-    <footer className='bg-black-900 text-white py-4'>
+    <footer className='bg-black-900 text-white py-12 px-40'>
       <div className='flex mx-auto flex-col lg:flex-row justify-between
       px-9 md:px-28 py-4'>
         <div className='h-full w-fit flex-col mb-5'>
@@ -49,7 +49,7 @@ const Footer: FunctionComponent = () => {
                 • Qui sommes-nous
             </a>
             <a href='https://www.6tm.com/nous-contacter/' className={
-              'transition-opacityhover:opacity-70 font-extralight'}>
+              'transition-opacity hover:opacity-70 font-extralight'}>
                 • Nous contacter
             </a>
           </div>

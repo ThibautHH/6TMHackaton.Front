@@ -1,12 +1,41 @@
 import React, { FunctionComponent } from 'react';
+import Button from '../components/Button';
+import Layout from './Layout';
 
 const Home: FunctionComponent = () => {
-  // JS
   return (
-    // HTML
-    <>
-      <h1>Home</h1>
-    </>
+    <Layout>
+      <div className='flex flex-col justify-items-center gap-y-5 py-28'>
+        <div className='flex flex-col gap-x-2'>
+          <p className='text-7xl font-semibold'>Créons <strong>ensemble </strong></p>
+          <p className='text-7xl font-semibold'>votre réussite</p>
+          <p className='text-7xl font-semiblod'>numérique</p>
+        </div>
+        <div className='flex flex-col gap-x-2'>
+          <p className='text-lg'>
+            6TM est une société de conseil en transformation
+          </p>
+          <p className='text-lg'>
+            numérique. De l'idée à la réalisation, nous accompagnons
+          </p>
+          <p className='text-lg'>
+            nos clients PME, ETI, Grands Comptes, pour donner vie à
+          </p>
+          <p className='text-lg'>
+            des projets digitaux intelligents et durables.
+          </p>
+        </div>
+        <div className='flex flex-row gap-x-2'>
+          <Button type='primary' link='https://www.6tm.com/entreprise-transformation-
+          digitale'>
+            À PROPOS DE NOUS
+          </Button>
+          <Button type='invert' link='https://www.6tm.com/nous-rejoindre-chez-6tm/'>
+            NOUS REJOINDRE
+          </Button>
+        </div>
+      </div>
+    </Layout>
   );
 };
 
