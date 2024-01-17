@@ -4,7 +4,7 @@ export async function deletePremise(id: string) {
   const config = {
     method: 'delete',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/premise/${id}`,
+    url: `${process.env.REACT_APP_BASE_URL}/premises/${id}`,
     headers: {
       'Content-Type': 'application/json'
     }

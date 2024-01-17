@@ -4,7 +4,7 @@ export async function getUsers() {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/`,
+    url: `${process.env.REACT_APP_BASE_URL}/users`,
     headers: {
       'Content-Type': 'application/json'
     }

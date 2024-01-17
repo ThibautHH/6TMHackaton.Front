@@ -1,11 +1,10 @@
 import axios from 'axios';
-import Users from '../../types/User';
 
-export async function getUser(data: Users) {
+export async function getUser(id: string) {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/${data}`,
+    url: `${process.env.REACT_APP_BASE_URL}/users/${id}`,
     headers: {
       'Content-Type': 'application/json'
     }

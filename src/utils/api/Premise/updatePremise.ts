@@ -5,7 +5,7 @@ export async function updatePremise(id: string, data: Premise) {
   const config = {
     method: 'patch',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/premise/${id}`,
+    url: `${process.env.REACT_APP_BASE_URL}/premises/${id}`,
     headers: {
       'Content-Type': 'application/json'
     },

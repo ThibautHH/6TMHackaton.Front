@@ -4,7 +4,7 @@ export async function getEmployees() {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/`,
+    url: `${process.env.REACT_APP_BASE_URL}/employees`,
     headers: {
       'Content-Type': 'application/json'
     }

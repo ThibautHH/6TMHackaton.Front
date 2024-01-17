@@ -1,11 +1,10 @@
 import axios from 'axios';
-import Users from '../../types/User';
 
-export async function updateUsers(data: Users) {
+export async function updateUsers(id: string) {
   const config = {
     method: 'patch',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/${data}`,
+    url: `${process.env.REACT_APP_BASE_URL}/users/${id}`,
     headers: {
       'Content-Type': 'application/json'
     }

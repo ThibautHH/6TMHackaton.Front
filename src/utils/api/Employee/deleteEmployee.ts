@@ -1,11 +1,10 @@
 import axios from 'axios';
-import Employee from '../../types/Employee';
 
-export async function deleteEmployee(data: Employee) {
+export async function deleteEmployee(id: string) {
   const config = {
     method: 'delete',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/${data}`,
+    url: `${process.env.REACT_APP_BASE_URL}/employees/${id}`,
     headers: {
       'Content-Type': 'application/json'
     }
