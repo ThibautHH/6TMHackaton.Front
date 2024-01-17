@@ -142,14 +142,16 @@ const PersonPage: FunctionComponent = () => {
           </div>
         </div>
       </div>
-      <div className='gap-5 mx-auto flex flex-col md:flex-row flex-wrap mt-20
-      justify-between'>
+      <div className='flex flex-col mt-20'>
         <h1 className='text-4xl font-bold col-span-full'>
           D'autres personnes qui pourraient vous intéresser
         </h1>
-        {otherPeople.map((p, i) => (
-          <PersonCard key={p.nom} person={p} id={i} />
-        ))}
+        <div className='gap-5 mx-auto flex flex-col md:flex-row flex-wrap mt-5
+      justify-between'>
+          {otherPeople.map((p, i) => (
+            <PersonCard key={p.nom} person={p} id={i} />
+          ))}
+        </div>
       </div>
     </Layout>
   );

@@ -54,7 +54,7 @@ const List: FunctionComponent = () => {
           jobs={jobs} setJobs={setJobs} jobsValues={jobsValues}
         />
         <div className='gap-5 mx-auto flex flex-col md:flex-row flex-wrap
-        justify-between'>
+        justify-between items-start'>
           {filteredData.map((person, index) => (
             <PersonCard key={index} person={person} id={index} />
           ))}
