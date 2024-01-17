@@ -1,11 +1,10 @@
 import axios from 'axios';
-import Premise from '../../types/Premise';
 
-export async function deletePremise(data: Premise) {
+export async function deletePremise(id: string) {
   const config = {
     method: 'delete',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/${data}`,
+    url: `${process.env.REACT_APP_BASE_URL}/premise/${id}`,
     headers: {
       'Content-Type': 'application/json'
     }
@@ -15,5 +14,5 @@ export async function deletePremise(data: Premise) {
   }).catch((error) => {
     return error.response;
   });
-  return response as Premise;
+  return response;
 }

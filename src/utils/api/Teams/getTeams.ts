@@ -1,11 +1,10 @@
 import axios from 'axios';
-import Teams from '../../types/Teams';
 
 export async function getTeams() {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/`,
+    url: `${process.env.REACT_APP_BASE_URL}/teams`,
     headers: {
       'Content-Type': 'application/json'
     }
@@ -15,5 +14,5 @@ export async function getTeams() {
   }).catch((error) => {
     return error.response;
   });
-  return response as Teams[];
+  return response;
 }

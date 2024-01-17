@@ -1,7 +1,7 @@
 interface Premise {
-    city: string,
     id?: number,
-    _context?: string,
+    city: string,
+    _context?: string | object,
     _id?: string,
     _type?: string
 }

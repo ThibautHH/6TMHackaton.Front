@@ -1,11 +1,10 @@
 import axios from 'axios';
-import Teams from '../../types/Teams';
 
-export async function deleteTeams(data: Teams) {
+export async function deleteTeams(id: string) {
   const config = {
     method: 'delete',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/${data}`,
+    url: `${process.env.REACT_APP_BASE_URL}/teams/${id}`,
     headers: {
       'Content-Type': 'application/json'
     }
@@ -15,5 +14,5 @@ export async function deleteTeams(data: Teams) {
   }).catch((error) => {
     return error.response;
   });
-  return response as Teams;
+  return response;
 }

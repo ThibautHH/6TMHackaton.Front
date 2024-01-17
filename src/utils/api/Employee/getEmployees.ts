@@ -10,10 +10,11 @@ export async function getEmployees() {
       'Content-Type': 'application/json'
     }
   };
-  const response = await axios.request(config).then((response) => {
-    return response.data.data;
-  }).catch((error) => {
-    return error.response;
-  });
-  return response as Employee[];
+  const response = await axios.request(config)
+    .then((response) => {
+      return response.data.data;
+    }).catch((error) => {
+      return error.response;
+    });
+  return response;
 }

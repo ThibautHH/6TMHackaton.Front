@@ -15,5 +15,5 @@ export async function createEmployee(data: Employee) {
   }).catch((error) => {
     return error.response;
   });
-  return response as Employee;
+  return response;
 }

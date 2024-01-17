@@ -1,10 +1,10 @@
 interface Employee {
+  id?: number,
   name: string,
   firstName: string,
   position: string,
   team: string,
-  id?: number,
-  _context?: string,
+  _context?: string | object,
   _id?: string,
   _type?: string
 }

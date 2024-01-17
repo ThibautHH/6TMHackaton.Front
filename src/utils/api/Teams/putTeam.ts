@@ -1,19 +1,20 @@
 import axios from 'axios';
-import Teams from '../../types/Teams';
+import { Team } from '../../types';
 
-export async function getTeams(id: string) {
+export async function putTeams(id: string, data: Team) {
   const config = {
-    method: 'get',
+    method: 'put',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/${id}`,
+    url: `${process.env.REACT_APP_BASE_URL}/teams/${id}`,
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    data: data
   };
   const response = await axios.request(config).then((response) => {
     return response.data.data;
   }).catch((error) => {
     return error.response;
   });
-  return response as Teams;
+  return response;
 }

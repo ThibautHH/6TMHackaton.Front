@@ -1,11 +1,10 @@
 import axios from 'axios';
-import Premise from '../../types/Premise';
 
 export async function getPremises() {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: `${process.env.REACT_APP_BASE_URL}/`,
+    url: `${process.env.REACT_APP_BASE_URL}/premises`,
     headers: {
       'Content-Type': 'application/json'
     }
@@ -15,5 +14,5 @@ export async function getPremises() {
   }).catch((error) => {
     return error.response;
   });
-  return response as Premise[];
+  return response;
 }
