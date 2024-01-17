@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getTeams() {
+async function getTeams() {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
@@ -16,3 +16,5 @@ export async function getTeams() {
   });
   return response;
 }
+
+export default getTeams;

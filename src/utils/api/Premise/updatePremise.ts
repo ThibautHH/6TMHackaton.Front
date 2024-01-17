@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Premise from '../../types/Premise';
 
-export async function updatePremise(id: string, data: Premise) {
+async function updatePremise(id: string, data: Premise) {
   const config = {
     method: 'patch',
     maxBodyLength: Infinity,
@@ -19,3 +19,5 @@ export async function updatePremise(id: string, data: Premise) {
     });
   return response ;
 }
+
+export default updatePremise;

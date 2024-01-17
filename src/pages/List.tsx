@@ -3,6 +3,7 @@ import PersonCard from '../components/PersonCard';
 import data from './data.json';
 import Layout from './Layout';
 import { Filter } from '../components';
+import { getEmployees } from '../utils/api';
 
 const agencesValues: { id: number, name: string }[] = Array
   .from(new Set(data.map(employe => employe.agence)))
@@ -43,6 +44,11 @@ const List: FunctionComponent = () => {
           jobs.some((job) => job.name === person.poste)
         )
     );
+    const fetchData = async () => {
+      const data = await getEmployees();
+      console.log('data', data);
+    };
+    fetchData();
   }, [input, agences, teams, jobs]);
 
   return (

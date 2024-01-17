@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function updateUsers(id: string) {
+async function updateUsers(id: string) {
   const config = {
     method: 'patch',
     maxBodyLength: Infinity,
@@ -16,3 +16,5 @@ export async function updateUsers(id: string) {
   });
   return response;
 }
+
+export default updateUsers;

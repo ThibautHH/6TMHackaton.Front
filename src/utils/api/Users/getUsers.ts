@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getUsers() {
+async function getUsers() {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
@@ -16,3 +16,5 @@ export async function getUsers() {
   });
   return response;
 }
+
+export default getUsers;

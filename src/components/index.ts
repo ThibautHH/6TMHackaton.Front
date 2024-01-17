@@ -8,6 +8,7 @@ import CheckBox from './CheckBox';
 import Dropdown from './Dropdown';
 import UpdateUserModal from './modals/UpdateUserModal';
 import CreateInput from './modals/CreateInput';
+import Alert from './Alert';
 
 export {
   Button,
@@ -19,5 +20,6 @@ export {
   CheckBox,
   Dropdown,
   UpdateUserModal,
-  CreateInput
+  CreateInput,
+  Alert
 };

@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import Layout from './Layout';
-import { Person } from '../utils/types';
+import { Employee, Person, Premise } from '../utils/types';
 import data from './data.json';
 import PopHover from '../components/PopHover';
 import {
@@ -20,16 +20,14 @@ import {
   Input,
   UpdateUserModal
 } from '../components';
+import { createEmployee, createPremise, getPremises } from '../utils/api';
+import { AuthUser } from '../utils';
 
 interface Values {
   id: number,
   text: string,
   disabled?: boolean
 }
-
-const agencesValues: Values[] = Array  // API
-  .from(new Set(data.map(employe => employe.agence)))
-  .map((name, id) => ({ id: id + 1, text: name }));
 
 const teamsValues: Values[] = Array  // API
   .from(new Set(data.map(employe => employe.equipe)))
@@ -47,10 +45,28 @@ const Admin: FunctionComponent = () => {
   const [filteredData, setFilteredData] = useState(data);
   const [modalState, setModalState] = useState<'update' | 'create' | null>(null);
   const [updatingUser, setUpdatingUser] = useState<Person | null>(null);
-  const [createInput, setCreateInput] = useState<'agence' | 'equipe' | 'poste' | null>(null);
+  const [createInput, setCreateInput] = useState<'agence' | 'equipe' |
+  'poste' | null>(null);
   const [createInputValue, setCreateInputValue] = useState<string>('');
+  const [agencesValues, setAgencesValues] = useState<{ id: number, text: string }[]>([]);
+  const user = AuthUser();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getPremises();
+      console.log('response', response);
+      if (response.status !== 200)
+        return;
+      const premises: Premise[] = response.data['hydra:member'];
+      setAgencesValues(premises.map((premise, id) => ({
+        id: id + 1,
+        text: premise.city
+      })));
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     if (input === '')
       setFilteredData(data);
     else
@@ -127,8 +143,15 @@ const Admin: FunctionComponent = () => {
                   />
                   <Button
                     type='secondary'
-                    onClick={() => {
-                      console.log('Create'); // API
+                    onClick={async () => {
+                      const newAgence: Premise = {
+                        city: createInputValue
+                      };
+                      const response = await createPremise(newAgence, user?.token);
+                      if (response.status === 201) {
+                        setCreateInputValue('');
+                        setCreateInput(null);
+                      }
                       return 0;
                     }}
                   >
@@ -239,8 +262,15 @@ const Admin: FunctionComponent = () => {
               <Button
                 type='secondary'
                 className='w-full'
-                onClick={() => {
-                  console.log('Create'); // API
+                onClick={async () => {
+                  const newUser: Employee = {
+                    name: updatingUser.nom,
+                    firstName: updatingUser.prenom,
+                    position: updatingUser.agence,
+                    team: updatingUser.equipe
+                  };
+                  const response = await createEmployee(newUser, user?.token);
+                  console.log('response', response);
                   return 0;
                 }}
               >

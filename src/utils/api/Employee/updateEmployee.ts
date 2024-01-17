@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Employee from '../../types/Employee';
 
-export async function updateEmployee(data: Employee, id: string) {
+async function updateEmployee(data: Employee, id: string) {
   const config = {
     method: 'patch',
     maxBodyLength: Infinity,
@@ -18,3 +18,5 @@ export async function updateEmployee(data: Employee, id: string) {
   });
   return response;
 }
+
+export default updateEmployee;

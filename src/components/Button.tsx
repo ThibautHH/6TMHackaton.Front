@@ -28,9 +28,9 @@ const Button: FC<ButtonProps> = ({
     disabled:border-secondary-500';
     break;
   case 'invert':
-    style += 'bg-white hover:bg-secondary-500 shadow-sm \
+    style += 'bg-white hover:bg-secondary-500 shadow-sm disable:hover:border-black-900 \
     text-black-900 disabled:hover:bg-white border-2 px-10 \
-    border-black hover:disabled:text-secondary-500';
+    border-black-900 disabled:hover:text-black-900';
     break;
   case 'text':
     style += 'text-black-900 hover:text-opacity-80 disabled:hover:text-secondary-500';

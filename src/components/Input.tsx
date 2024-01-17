@@ -36,7 +36,8 @@ const Input: FunctionComponent<InputProps> = ({
         placeholder={placeholder}
         rows={rows}
         value={value}
-        onChange={onChange} />
+        onChange={onChange}
+        required={required} />
     </div>
   );
 
@@ -57,7 +58,8 @@ const Input: FunctionComponent<InputProps> = ({
         disabled:opacity-50 border-2`}
         placeholder={placeholder}
         value={value}
-        onChange={onChange}/>
+        onChange={onChange}
+        required={required} />
     </div>
   );
 };

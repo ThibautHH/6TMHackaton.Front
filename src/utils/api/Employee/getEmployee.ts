@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getEmployee(id: string) {
+async function getEmployee(id: string) {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
@@ -17,3 +17,5 @@ export async function getEmployee(id: string) {
     });
   return response;
 }
+
+export default getEmployee;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getTeam(id: string) {
+async function getTeam(id: string) {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
@@ -16,3 +16,5 @@ export async function getTeam(id: string) {
   });
   return response;
 }
+
+export default getTeam;

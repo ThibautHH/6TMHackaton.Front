@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Team } from '../../types';
 
-export async function updateTeam(id: string, data: Team) {
+async function updateTeam(id: string, data: Team) {
   const config = {
     method: 'patch',
     maxBodyLength: Infinity,
@@ -18,3 +18,5 @@ export async function updateTeam(id: string, data: Team) {
   });
   return response;
 }
+
+export default updateTeam;

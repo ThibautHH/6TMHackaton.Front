@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Premise } from '../../types';
 
-export async function putPremise(id: string, data: Premise) {
+async function putPremise(id: string, data: Premise) {
   const config = {
     method: 'put',
     maxBodyLength: Infinity,
@@ -18,3 +18,5 @@ export async function putPremise(id: string, data: Premise) {
   });
   return response;
 }
+
+export default putPremise;

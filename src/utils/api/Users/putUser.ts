@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { User } from '../../types';
 
-export async function putUsers(id: string, data: User) {
+async function putUsers(id: string, data: User) {
   const config = {
     method: 'get',
     maxBodyLength: Infinity,
@@ -18,3 +18,5 @@ export async function putUsers(id: string, data: User) {
   });
   return response;
 }
+
+export default putUsers;
