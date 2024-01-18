@@ -79,10 +79,7 @@ const PersonPage: FunctionComponent = () => {
   }, [teamsValues]);
 
   useEffect(() => {
-    console.log(id);
     if (id && !isNaN(parseInt(id))) {
-      console.log('persona', data
-        .find((p) => p.id === parseInt(id)));
       setPerson(data
         .find((p) => p.id === parseInt(id)) || null);
     }
@@ -92,14 +89,19 @@ const PersonPage: FunctionComponent = () => {
 
   let otherPeople = data
     .filter((p) => p.team === person?.team)
-    .filter((p) => p.name !== person?.name && p.firstName !== person?.firstName)
-    .slice(0, 8);
+    .filter((p) => p.id !== person?.id)
+    .slice(0, 10);
 
   if (otherPeople.length <= 0)
     otherPeople = data
-      .filter((p) => p.premise === person?.premise)
-      .filter((p) => p.name !== person?.name && p.firstName !== person?.firstName)
-      .slice(0, 8);
+      .filter((p) => p.premise === person?.premise?.['@id'])
+      .filter((p) => p.id !== person?.id)
+      .slice(0, 10);
+
+  if (otherPeople.length <= 0)
+    otherPeople = data
+      .filter((p) => p.id !== person?.id)
+      .slice(0, 10);
 
   if (loading)
     return (
@@ -138,7 +140,7 @@ const PersonPage: FunctionComponent = () => {
       </Layout>
     );
 
-  if (!id || isNaN(parseInt(id)) || !person)
+  if (!person)
     return (
       <Layout>
         <div className='flex flex-col relative py-52'>

@@ -27,6 +27,7 @@ import {
   createPremise,
   createTeam,
   deleteEmployee,
+  deletePremise,
   getEmployees,
   getPremises,
   getTeams,
@@ -67,6 +68,10 @@ const Admin: FunctionComponent = () => {
   const user = AuthUser();
   const navigate = useNavigate();
   const [alert, setAlert] = useState({text: '', type: '', title: ''});
+  const [premiseState, setPremiseState] = useState<string>('');
+  const [teamState, setTeamState] = useState<{
+    team: string, premise: string
+  }>({team: '', premise: ''});
 
   const handleAlert = (text: string, type: string, title: string) => {
     setAlert({text: text, type: type, title: title});
@@ -158,23 +163,21 @@ const Admin: FunctionComponent = () => {
 
   return (
     <Layout>
-      <div className='relative w-full p-5 h-full'>
-        {alert.text !== '' && (
-          <Alert
-            title={alert.title}
-            type={alert.type}
-            message={alert.text}
-            className='absolute bottom-0 z-[1000] w-full'
-          />
-        )}
-      </div>
+      {alert.text !== '' && (
+        <Alert
+          title={alert.title}
+          type={alert.type}
+          message={alert.text}
+          className='fixed bottom-5 z-[1000] left-5 md:w-11/12'
+        />
+      )}
       {modalState === 'delete' && (
         <DeleteUserModal
           title='Supprimer un utilisateur'
           close={() => setModalState(null)}
           subtitle='Êtes-vous sûr de vouloir supprimer cet utilisateur ?'
         >
-          <div className='flex flex-col gap-y-5 text-left'>
+          <div className='flex flex-col gap-y-3 text-left'>
             <div className='flex flex-col gap-y-2 mt-5'>
               <Button
                 type='danger'
@@ -185,7 +188,7 @@ const Admin: FunctionComponent = () => {
                   );
                   if (response.status === 204) {
                     setModalState(null);
-                    window.location.reload();
+                    setData(data.filter((item) => item.id !== updatingUser?.id));
                   } else {
                     handleAlert(
                       response.data.message, 'alert', 'Une erreur est survenue'
@@ -213,7 +216,7 @@ const Admin: FunctionComponent = () => {
           title='Créer un utilisateur'
           close={() => setModalState(null)}
         >
-          <div className='flex flex-col gap-y-5 text-left'>
+          <div className='flex flex-col gap-y-3 text-left'>
             <Input
               type='text'
               required
@@ -244,70 +247,37 @@ const Admin: FunctionComponent = () => {
                   });
               }}
             />
-            <div className='flex flex-col gap-2 items-end w-full'>
-              <Dropdown
-                title='Agence'
-                required
-                values={agencesValues}
-                value={(agencesValues
-                  .find((item) => item._id === updatingUser.premise?.['@id']))}
-                addValue={() => setCreateInput('agence')}
+            <div className='flex flex-row gap-2 justify-between w-full'>
+              <Input
+                type='url'
+                placeholder='https://'
+                id='photo'
+                title='Photo professionnelle (format 9:16)'
+                value={updatingUser.professionalPicture || ''}
                 onChange={(e) => {
-                  setUpdatingUser({
-                    ...updatingUser,
-                    premise: premises.find((premise) => premise['@id'] === e._id)
-                  });
+                  if (updatingUser)
+                    setUpdatingUser({
+                      ...updatingUser,
+                      professionalPicture: e.target.value
+                    });
                 }}
+                className='w-full'
               />
-              {createInput === 'agence' && (
-                <div className='flex flex-row gap-2 w-full justify-between'>
-                  <Input
-                    type='text'
-                    required
-                    placeholder="Nom de l'agence"
-                    id='agence'
-                    value={createInputValue}
-                    onChange={(e) => setCreateInputValue(e.target.value)}
-                  />
-                  <Button
-                    type='secondary'
-                    disabled={!createInputValue}
-                    onClick={async () => {
-                      const newAgence: Premise = {
-                        city: createInputValue
-                      };
-                      const response = await createPremise(newAgence, user?.token);
-                      if (response.status === 201) {
-                        setCreateInputValue('');
-                        setCreateInput(null);
-                        setAgencesValues([
-                          ...agencesValues,
-                          {
-                            id: agencesValues.length + 1,
-                            text: createInputValue,
-                            _id: response.data['@id']
-                          }
-                        ]);
-                      } else {
-                        handleAlert(
-                          response.data.message, 'alert', 'Une erreur est survenue'
-                        );
-                      }
-                      return 0;
-                    }}
-                  >
-                    <PlusIcon className='w-5 h-5' />
-                    Ajouter
-                  </Button>
-                  <Button
-                    type='invert'
-                    onClick={() => setCreateInput(null)}
-                  >
-                    <XMarkIcon className='w-5 h-5' />
-                    Annuler
-                  </Button>
-                </div>
-              )}
+              <Input
+                type='url'
+                placeholder='https://'
+                id='photo'
+                title='Photo fun (format 9:16)'
+                value={updatingUser.casualPicture || ''}
+                onChange={(e) => {
+                  if (updatingUser)
+                    setUpdatingUser({
+                      ...updatingUser,
+                      casualPicture: e.target.value
+                    });
+                }}
+                className='w-full'
+              />
             </div>
             <div className='flex flex-col gap-2 items-end w-full'>
               <Dropdown
@@ -315,7 +285,6 @@ const Admin: FunctionComponent = () => {
                 required
                 values={teamsValues}
                 value={teamsValues.find((item) => item._id === updatingUser.team)}
-                addValue={() => setCreateInput('equipe')}
                 onChange={(e) => {
                   setUpdatingUser({
                     ...updatingUser,
@@ -323,73 +292,6 @@ const Admin: FunctionComponent = () => {
                   });
                 }}
               />
-              {createInput === 'equipe' && (
-                <div className='flex flex-col gap-2 w-full'>
-                  <div className='flex flex-row gap-2 w-full justify-between'>
-                    <Input
-                      type='text'
-                      required
-                      placeholder="Nom de l'équipe"
-                      title="Nom de l'équipe"
-                      id='equipe'
-                      value={createInputValue}
-                      onChange={(e) => setCreateInputValue(e.target.value)}
-                    />
-                    <Dropdown
-                      title='Agence'
-                      required
-                      values={agencesValues}
-                      value={createListValue}
-                      onChange={(e) => {
-                        setCreateListValue(e as {
-                          id: number, text: string, _id: string
-                        });
-                      }}
-                    />
-                  </div>
-                  <div className='flex flex-row gap-2'>
-                    <Button
-                      type='secondary'
-                      disabled={!createInputValue || !createListValue}
-                      onClick={async () => {
-                        if (!createListValue)
-                          return;
-                        const newTeam: Team = {
-                          name: createInputValue,
-                          premise: createListValue?._id as string
-                        };
-                        const response = await createTeam(newTeam, user?.token);
-                        if (response.status === 201) {
-                          setCreateInputValue('');
-                          setCreateInput(null);
-                          setTeamsValues([
-                            ...teamsValues,
-                            {
-                              id: teamsValues.length + 1,
-                              text: createInputValue,
-                              _id: response.data['@id']
-                            }
-                          ]);
-                        } else {
-                          handleAlert(
-                            response.data.message, 'alert', 'Une erreur est survenue'
-                          );
-                        }
-                      }}
-                    >
-                      <PlusIcon className='w-5 h-5' />
-                      Ajouter
-                    </Button>
-                    <Button
-                      type='invert'
-                      onClick={() => setCreateInput(null)}
-                    >
-                      <XMarkIcon className='w-5 h-5' />
-                      Annuler
-                    </Button>
-                  </div>
-                </div>
-              )}
             </div>
             <div className='flex flex-col gap-2 items-end w-full'>
               <Dropdown
@@ -460,12 +362,21 @@ const Admin: FunctionComponent = () => {
                     name: updatingUser.name,
                     firstName: updatingUser.firstName,
                     team: updatingUser.team as string,
-                    position: updatingUser.position
+                    position: updatingUser.position,
+                    professionalPicture: updatingUser.professionalPicture,
+                    casualPicture: updatingUser.casualPicture
                   };
                   const response = await createEmployee(newUser, user?.token);
                   console.info(response);
                   if (response.status === 201) {
                     setModalState(null);
+                    setData([
+                      ...data,
+                      {
+                        ...newUser,
+                        id: response.data['@id']
+                      }
+                    ]);
                   } else {
                     handleAlert(
                       response.data.message, 'alert', 'Une erreur est survenue'
@@ -494,7 +405,7 @@ const Admin: FunctionComponent = () => {
           title='Modifier un utilisateur'
           close={() => setModalState(null)}
         >
-          <div className='flex flex-col gap-y-5 text-left'>
+          <div className='flex flex-col gap-y-3 text-left'>
             <Input
               type='text'
               required
@@ -525,70 +436,37 @@ const Admin: FunctionComponent = () => {
                   });
               }}
             />
-            <div className='flex flex-col gap-2 items-end w-full'>
-              <Dropdown
-                title='Agence'
-                required
-                values={agencesValues}
-                value={(agencesValues
-                  .find((item) => item._id === updatingUser.premise?.['@id']))}
-                addValue={() => setCreateInput('agence')}
+            <div className='flex flex-row gap-2 justify-between w-full'>
+              <Input
+                type='url'
+                placeholder='https://'
+                id='photo'
+                title='Photo professionnelle (format 9:16)'
+                value={updatingUser.professionalPicture || ''}
                 onChange={(e) => {
-                  setUpdatingUser({
-                    ...updatingUser,
-                    premise: premises.find((premise) => premise['@id'] === e._id)
-                  });
+                  if (updatingUser)
+                    setUpdatingUser({
+                      ...updatingUser,
+                      professionalPicture: e.target.value
+                    });
                 }}
+                className='w-full'
               />
-              {createInput === 'agence' && (
-                <div className='flex flex-row gap-2 w-full justify-between'>
-                  <Input
-                    type='text'
-                    required
-                    placeholder="Nom de l'agence"
-                    id='agence'
-                    value={createInputValue}
-                    onChange={(e) => setCreateInputValue(e.target.value)}
-                  />
-                  <Button
-                    type='secondary'
-                    disabled={!createInputValue}
-                    onClick={async () => {
-                      const newAgence: Premise = {
-                        city: createInputValue
-                      };
-                      const response = await createPremise(newAgence, user?.token);
-                      if (response.status === 201) {
-                        setCreateInputValue('');
-                        setCreateInput(null);
-                        setAgencesValues([
-                          ...agencesValues,
-                          {
-                            id: agencesValues.length + 1,
-                            text: createInputValue,
-                            _id: response.data['@id']
-                          }
-                        ]);
-                      } else {
-                        handleAlert(
-                          response.data.message, 'alert', 'Une erreur est survenue'
-                        );
-                      }
-                      return 0;
-                    }}
-                  >
-                    <PlusIcon className='w-5 h-5' />
-                    Ajouter
-                  </Button>
-                  <Button
-                    type='invert'
-                    onClick={() => setCreateInput(null)}
-                  >
-                    <XMarkIcon className='w-5 h-5' />
-                    Annuler
-                  </Button>
-                </div>
-              )}
+              <Input
+                type='url'
+                placeholder='https://'
+                id='photo'
+                title='Photo fun (format 9:16)'
+                value={updatingUser.casualPicture || ''}
+                onChange={(e) => {
+                  if (updatingUser)
+                    setUpdatingUser({
+                      ...updatingUser,
+                      casualPicture: e.target.value
+                    });
+                }}
+                className='w-full'
+              />
             </div>
             <div className='flex flex-col gap-2 items-end w-full'>
               <Dropdown
@@ -596,7 +474,6 @@ const Admin: FunctionComponent = () => {
                 required
                 values={teamsValues}
                 value={teamsValues.find((item) => item._id === updatingUser.team)}
-                addValue={() => setCreateInput('equipe')}
                 onChange={(e) => {
                   setUpdatingUser({
                     ...updatingUser,
@@ -604,62 +481,6 @@ const Admin: FunctionComponent = () => {
                   });
                 }}
               />
-              {createInput === 'equipe' && (
-                <div className='flex flex-col gap-2 w-full'>
-                  <div className='flex flex-row gap-2 w-full justify-between'>
-                    <Input
-                      type='text'
-                      required
-                      placeholder="Nom de l'équipe"
-                      title="Nom de l'équipe"
-                      id='equipe'
-                      value={createInputValue}
-                      onChange={(e) => setCreateInputValue(e.target.value)}
-                    />
-                    <Dropdown
-                      title='Agence'
-                      required
-                      values={agencesValues}
-                      value={createListValue}
-                      onChange={(e) => {
-                        setCreateListValue(e as {
-                          id: number, text: string, _id: string
-                        });
-                      }}
-                    />
-                  </div>
-                  <div className='flex flex-row gap-2'>
-                    <Button
-                      type='secondary'
-                      disabled={!createInputValue || !createListValue}
-                      onClick={() => {
-                        setUpdatingUser({
-                          ...updatingUser,
-                          team: createInputValue
-                        });
-                        setTeamsValues([
-                          ...teamsValues,
-                          {
-                            id: teamsValues.length + 1,
-                            text: createInputValue
-                          }
-                        ]);
-                        setCreateInput(null);
-                      }}
-                    >
-                      <PlusIcon className='w-5 h-5' />
-                      Ajouter
-                    </Button>
-                    <Button
-                      type='invert'
-                      onClick={() => setCreateInput(null)}
-                    >
-                      <XMarkIcon className='w-5 h-5' />
-                      Annuler
-                    </Button>
-                  </div>
-                </div>
-              )}
             </div>
             <div className='flex flex-col gap-2 items-end w-full'>
               <Dropdown
@@ -730,7 +551,9 @@ const Admin: FunctionComponent = () => {
                   firstName: updatingUser.firstName,
                   team: updatingUser.team as string,
                   position: updatingUser.position,
-                  id: updatingUser.id
+                  id: updatingUser.id,
+                  professionalPicture: updatingUser.professionalPicture,
+                  casualPicture: updatingUser.casualPicture
                 };
                 const response = await updateEmployee(
                   updatedUser, updatedUser.id, user?.token
@@ -762,9 +585,12 @@ const Admin: FunctionComponent = () => {
         </UpdateUserModal>
       )}
       <div className='bg-black-25 rounded-lg shadow border-2 border-black-100'>
+        <h3 className='text-xl font-bold p-5'>Liste des employés</h3>
+        <hr className='border-black-200' />
         <div className='p-5'>
-          <div className='flex flex-row px-2 text-black-900 font-medium gap-5'>
-            <div className='w-3/6 flex flex-row items-center gap-1'>
+          <div className='flex flex-row px-2 text-black-900 font-medium gap-5
+          justify-between'>
+            <div className='w-full md:w-2/6 flex flex-row items-center gap-1'>
               <UserIcon className='w-5 h-5' />
               <span>Prénom/Nom</span>
             </div>
@@ -780,7 +606,7 @@ const Admin: FunctionComponent = () => {
               <ComputerDesktopIcon className='w-5 h-5' />
               <span>Poste</span>
             </div>
-            <div className='w-full max-w-48'>
+            <div className='w-full max-w-32'>
               <Input
                 type='text'
                 placeholder='Rechercher'
@@ -795,8 +621,8 @@ const Admin: FunctionComponent = () => {
         <div className='p-5'>
           {filteredData.slice(0, parseInt(length.text)).map((item, index) => (
             <div key={index} className='flex flex-row hover:bg-black-100 rounded-lg
-            font-regular text-black-900 px-2 py-1 items-center gap-5'>
-              <div className='w-3/6 truncate'>
+            font-regular text-black-900 px-2 py-1 items-center gap-5 justify-between'>
+              <div className='w-full md:w-2/6 truncate'>
                 <span>{item.firstName} {item.name}</span>
               </div>
               <div className='w-1/6 truncate hidden md:flex'>
@@ -809,7 +635,8 @@ const Admin: FunctionComponent = () => {
               <div className='w-1/6 truncate hidden xl:flex'>
                 <span>{item.position}</span>
               </div>
-              <div className='w-full max-w-48 flex flex-row gap-2'>
+              <div className='w-full max-w-32 flex flex-row gap-2 justify-end
+                items-center'>
                 <button className='text-black-900 cursor-pointer p-1 hover:bg-black-300
                 w-8 h-8 rounded-lg transition-all duration-100 outline-none z-10
                 bg-black-200' onClick={() => {
@@ -856,7 +683,7 @@ const Admin: FunctionComponent = () => {
           ))}
         </div>
         <div className='px-5 mb-5'>
-          <Button type='invert' className='w-full' onClick={() => {
+          <Button type='secondary' className='w-full' onClick={() => {
             const newUser: Employee = {
               name: '',
               firstName: '',
@@ -886,6 +713,230 @@ const Admin: FunctionComponent = () => {
             value={length}
             onChange={(e) => setLength(e)}
           />
+        </div>
+      </div>
+      <div className='bg-black-25 rounded-lg shadow border-2 border-black-100 mt-10'>
+        <h3 className='text-xl font-bold p-5'>Liste des agences</h3>
+        <hr className='border-black-200' />
+        <div className='p-5'>
+          <div className='flex flex-row px-2 text-black-900 font-medium gap-5
+          justify-between'>
+            <div className='w-full md:w-1/6 flex flex-row items-center gap-1'>
+              <MapPinIcon className='w-5 h-5' />
+              <span>Agence</span>
+            </div>
+            <div className='w-5/6 hidden md:flex flex-row'>
+              <UserGroupIcon className='w-5 h-5 mr-1' />
+              <span>Teams</span>
+            </div>
+            <div className='w-full max-w-10'>
+            </div>
+          </div>
+        </div>
+        <hr className='border-black-200' />
+        <div className='p-5'>
+          {premises.map((item, index) => (
+            <div key={index} className='flex flex-row hover:bg-black-100 rounded-lg
+            font-regular text-black-900 px-2 py-1 items-center gap-5 justify-between'>
+              <div className='w-full md:w-1/6 truncate'>
+                <span>{item.city}</span>
+              </div>
+              <div className='w-5/6 truncate hidden md:block'>
+                <span>{teams
+                  .filter((team) => team.premise === item['@id'])
+                  .map((team) => team.name)
+                  .join(', ')}
+                </span>
+              </div>
+              <div className='w-full max-w-10 flex flex-row gap-2'>
+                <PopHover
+                  values={[
+                    {
+                      name: 'Supprimer',
+                      icon: <TrashIcon className='w-5 h-5' />,
+                      colors: {
+                        danger: true
+                      },
+                      disabled: teams
+                        .some((team) => team.premise === item['@id']),
+                      onClick: async () => {
+                        const response = await deletePremise(
+                          item.id, user?.token
+                        );
+                        console.info(response);
+                        if (response.status === 204) {
+                          setPremises(premises
+                            .filter((premise) => premise.id !== item.id));
+                        } else {
+                          handleAlert(
+                            response.data.message || response.data.title,
+                            'alert', 'Une erreur est survenue'
+                          );
+                        }
+                        return 1;
+                      }
+                    }
+                  ]}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <hr className='border-black-200' />
+        <div className='p-5 flex flex-col gap-2'>
+          <Input
+            type='text'
+            placeholder='Ex: Paris'
+            id='agence'
+            title="Nom de l'agence"
+            value={premiseState}
+            onChange={(e) => setPremiseState(e.target.value)}
+          />
+          <Button type='secondary' className='w-full'
+            disabled={!premiseState}
+            onClick={async () => {
+              const newPremise: Premise = {
+                city: premiseState
+              };
+              setPremiseState('');
+              const response = await createPremise(newPremise, user?.token);
+              if (response.status === 201) {
+                setPremises([
+                  ...premises,
+                  {
+                    city: premiseState,
+                    '@id': response.data['@id']
+                  }
+                ]);
+              } else {
+                handleAlert(
+                  response.data.message, 'alert', 'Une erreur est survenue'
+                );
+              }
+            }}>
+            <DocumentPlusIcon className='w-5 h-5' />
+            Créer une agence
+          </Button>
+        </div>
+      </div>
+      <div className='bg-black-25 rounded-lg shadow border-2 border-black-100 mt-10
+      z-20'>
+        <h3 className='text-xl font-bold p-5'>Liste des équipes</h3>
+        <hr className='border-black-200' />
+        <div className='p-5'>
+          <div className='flex flex-row px-2 text-black-900 font-medium gap-5
+          justify-between'>
+            <div className='w-full md:w-1/6 flex flex-row items-center gap-1'>
+              <UserGroupIcon className='w-5 h-5' />
+              <span>Team</span>
+            </div>
+            <div className='w-5/6 hidden md:flex flex-row'>
+              <MapPinIcon className='w-5 h-5 mr-1' />
+              <span>Agence</span>
+            </div>
+            <div className='w-full max-w-10'>
+            </div>
+          </div>
+        </div>
+        <hr className='border-black-200' />
+        <div className='p-5'>
+          {teams.map((item, index) => (
+            <div key={index} className='flex flex-row hover:bg-black-100 rounded-lg
+            font-regular text-black-900 px-2 py-1 items-center gap-5 justify-between'>
+              <div className='w-full md:w-1/6 truncate'>
+                <span>{item.name}</span>
+              </div>
+              <div className='w-5/6 truncate hidden md:block'>
+                <span>{premises
+                  .find((premise) => premise['@id'] === item.premise)?.city}
+                </span>
+              </div>
+              <div className='w-full max-w-10 flex flex-row gap-2'>
+                <PopHover
+                  values={[
+                    {
+                      name: 'Supprimer',
+                      icon: <TrashIcon className='w-5 h-5' />,
+                      colors: {
+                        danger: true
+                      },
+                      onClick: async () => {
+                        const response = await deletePremise(
+                          item.id, user?.token
+                        );
+                        console.info(response);
+                        if (response.status === 204) {
+                          setTeams(teams
+                            .filter((team) => team.id !== item.id));
+                        } else {
+                          handleAlert(
+                            response.data.message || response.data.title,
+                            'alert', 'Une erreur est survenue'
+                          );
+                        }
+                        return 1;
+                      }
+                    }
+                  ]}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <hr className='border-black-200' />
+        <div className='p-5 flex flex-col gap-2'>
+          <Input
+            type='text'
+            placeholder='Ex: Team IA'
+            id='team'
+            title="Nom de l'équipe"
+            required
+            value={teamState.team}
+            onChange={(e) => setTeamState({
+              ...teamState,
+              team: e.target.value
+            })}
+          />
+          <Dropdown
+            title="Agence de l'équipe"
+            required
+            values={agencesValues}
+            value={agencesValues.find((item) => item._id === teamState.premise)}
+            onChange={(e) => setTeamState({
+              ...teamState,
+              premise: e._id as string
+            })}
+          />
+          <Button type='secondary' className='w-full'
+            disabled={!teamState.team || !teamState.premise}
+            onClick={async () => {
+              const newTeam: Team = {
+                name: teamState.team,
+                premise: teamState.premise
+              };
+              const response = await createTeam(newTeam, user?.token);
+              if (response.status === 201) {
+                setTeams([
+                  ...teams,
+                  {
+                    name: teamState.team,
+                    premise: teamState.premise,
+                    '@id': response.data['@id']
+                  }
+                ]);
+              } else {
+                handleAlert(
+                  response.data.message, 'alert', 'Une erreur est survenue'
+                );
+              }
+              setTeamState({
+                team: '',
+                premise: ''
+              });
+            }}>
+            <DocumentPlusIcon className='w-5 h-5' />
+            Créer une équipe
+          </Button>
         </div>
       </div>
     </Layout>

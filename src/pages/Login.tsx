@@ -98,7 +98,7 @@ const Login: FunctionComponent = () => {
             message={alert.text}
             type={alert.type}
             title={alert.title}
-            className='mt-5 w-full bottom-0'
+            className='fixed bottom-5 z-[1000] left-5 md:w-11/12'
           />
         )}
       </div>

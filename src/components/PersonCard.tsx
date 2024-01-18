@@ -23,13 +23,13 @@ const employeeCard: React.FC<{employee: Employee, id: number | undefined }> = ({
             <img
               src={employee.professionalPicture}
               alt={employee.name}
-              className='group-hover:hidden flex mb-5'
+              className='group-hover:hidden flex mb-5 overflow-hidden'
               loading='lazy'
             />
             <img
               src={employee.casualPicture}
               alt={employee.name}
-              className='group-hover:flex hidden mb-5'
+              className='group-hover:flex hidden mb-5 overflow-hidden'
               loading='lazy'
             />
           </>

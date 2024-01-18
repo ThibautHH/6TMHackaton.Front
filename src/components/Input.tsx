@@ -19,7 +19,7 @@ const Input: FunctionComponent<InputProps> = ({
   textArea, rows, maxLength, id, required, title
 }) => {
   if (textArea === true) return (
-    <div>
+    <div className='w-full'>
       {title && (
         <label htmlFor={id} className='block mb-2 text-sm font-medium text-white
         text-opacity-80'>
@@ -42,9 +42,9 @@ const Input: FunctionComponent<InputProps> = ({
   );
 
   return (
-    <div>
+    <div className='w-full'>
       {title && (
-        <label htmlFor={id} className='block mb-2 text-sm font-medium text-black-900'>
+        <label htmlFor={id} className='block mb-1 text-sm font-medium text-black-900'>
           {title}
           {required && <span className='text-red-500 ml-1'>*</span>}
         </label>

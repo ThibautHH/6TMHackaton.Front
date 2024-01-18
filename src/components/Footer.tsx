@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Footer: FunctionComponent = () => {
   const navigate = useNavigate();
   return (
-    <footer className='bg-black-900 text-white py-12 px-40 z-10'>
+    <footer className='bg-black-900 text-white py-12 px-40'>
       <div className='flex mx-auto flex-col lg:flex-row justify-between
       px-9 md:px-28 py-4'>
         <div className='h-full w-fit flex-col mb-5'>

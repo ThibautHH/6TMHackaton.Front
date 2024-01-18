@@ -32,8 +32,8 @@ const UpdateUserModal: FunctionComponent<UpdateUserModalProps> = ({
     <>
       <div className='fixed top-0 left-0 right-0 bottom-0
       bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-sm z-50'/>
-      <div className='fixed left-0 right-0 top-0 z-50 p-4 animate-fade-in transition-all
-      duration-300 w-full h-full flex justify-center'>
+      <div className='fixed left-0 right-0 top-10 p-4 animate-fade-in transition-all
+      duration-300 w-full h-full flex justify-center z-[500]'>
         <div className='relative w-fit min-w-0 sm:min-w-[600px] max-w-lg
         max-h-full m-auto' ref={ref}>
           <div className='relative bg-black-25 rounded-lg shadow border-2

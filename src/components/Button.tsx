@@ -38,14 +38,14 @@ const Button: FC<ButtonProps> = ({
     disabled:hover:text-white';
     break;
   case 'text':
-    style += 'text-black-900 hover:text-opacity-80 disabled:hover:text-secondary-500';
+    style += 'text-black-900 hover:-translate-y-2 disabled:hover:text-black-900';
     break;
   }
   return (
     <button className={`items-center text-base w-fit
     font-medium py-3 h-11 rounded-lg flex flex-row justify-center
     disabled:opacity-60 disabled:cursor-not-allowed min-h-10 ${style}
-    transition duration-200 ease-in-out ${className}`}
+    transition duration-200 ease-in-out ${className} whitespace-nowrap truncate`}
     disabled={disabled || false}
     onClick={() => handleClick(link)}>
       {loading ? (
