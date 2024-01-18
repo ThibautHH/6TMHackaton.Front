@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { Employee } from '../utils/types';
 import Chart from 'chart.js/auto';
