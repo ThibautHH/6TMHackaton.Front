@@ -22,7 +22,7 @@ const Login: FunctionComponent = () => {
     const response = await getToken(email, password);
     if (response.status !== 200) {
       console.error('Failed to login');
-      handleAlert('Email ou mot de passe incorrect', 'alert', 'Connexion échouée');
+      handleAlert(response.data.message, 'alert', 'Connexion échouée');
       return;
     }
     if(signIn({
