@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import Layout from './Layout';
-import { Employee, Person, Premise } from '../utils/types';
+import { Employee, Person, Premise, Team } from '../utils/types';
 import data from './data.json';
 import PopHover from '../components/PopHover';
 import {
@@ -20,7 +20,7 @@ import {
   Input,
   UpdateUserModal
 } from '../components';
-import { createEmployee, createPremise, getPremises } from '../utils/api';
+import { createEmployee, createPremise, getPremises, getTeams } from '../utils/api';
 import { AuthUser } from '../utils';
 
 interface Values {
@@ -28,10 +28,6 @@ interface Values {
   text: string,
   disabled?: boolean
 }
-
-const teamsValues: Values[] = Array  // API
-  .from(new Set(data.map(employe => employe.equipe)))
-  .map((name, id) => ({ id: id + 1, text: name }));
 
 const jobsValues: Values[] = Array  // API
   .from(new Set(data.map(employe => employe.poste)))
@@ -48,11 +44,16 @@ const Admin: FunctionComponent = () => {
   const [createInput, setCreateInput] = useState<'agence' | 'equipe' |
   'poste' | null>(null);
   const [createInputValue, setCreateInputValue] = useState<string>('');
-  const [agencesValues, setAgencesValues] = useState<{ id: number, text: string }[]>([]);
+  const [agencesValues, setAgencesValues] = useState<{
+    id: number, text: string, _id: string
+  }[]>([]);
+  const [teamsValues, setTeamsValues] = useState<{
+    id: number, text: string, _id: string
+  }[]>([]);
   const user = AuthUser();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchPremises = async () => {
       const response = await getPremises();
       console.log('response', response);
       if (response.status !== 200)
@@ -60,10 +61,24 @@ const Admin: FunctionComponent = () => {
       const premises: Premise[] = response.data['hydra:member'];
       setAgencesValues(premises.map((premise, id) => ({
         id: id + 1,
-        text: premise.city
+        text: premise.city,
+        _id: premise['@id'] as string
       })));
     };
-    fetchData();
+    const fetchTeams = async () => {
+      const response = await getTeams();
+      console.log('response', response);
+      if (response.status !== 200)
+        return;
+      const teams: Team[] = response.data['hydra:member'];
+      setTeamsValues(teams.map((team, id) => ({
+        id: id + 1,
+        text: team.name,
+        _id: team['@id'] as string
+      })));
+    };
+    fetchPremises();
+    fetchTeams();
   }, []);
 
   useEffect(() => {

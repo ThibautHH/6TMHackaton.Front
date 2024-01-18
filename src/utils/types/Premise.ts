@@ -1,9 +1,9 @@
 interface Premise {
     id?: number,
     city: string,
-    _context?: string | object,
-    _id?: string,
-    _type?: string
+    '@context'?: string | object,
+    '@id'?: string,
+    '@type'?: string
 }
 
 export default Premise;
