@@ -7,10 +7,11 @@ import { Menu } from '@headlessui/react';
 import {
   Bars4Icon
 } from '@heroicons/react/24/solid';
+import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -35,25 +36,35 @@ const Header: React.FC = () => {
           alt='logo'/></a>
       <div className="items-center hidden lg:flex font-regular">
         <a
-          href='link-trombi'
+          onClick={() => navigate('/list')}
           className={`block mx-4 transition-opacity hover:opacity-70 text-sm
-          ${isScrolled ? 'text-black-900' : 'text-white'}`}>TROMBISCOPE</a>
+          cursor-pointer ${isScrolled ? 'text-black-900' : 'text-white'}`}>
+            TROMBINOSCOPE
+        </a>
         <a
           href='https://www.6tm.com/vos-objectifs-digitaux/'
           className={`block mx-4 transition-opacity hover:opacity-70 text-sm
-          ${isScrolled ? 'text-black-900' : 'text-white'}`}>VOS OBJECTIFS</a>
+          ${isScrolled ? 'text-black-900' : 'text-white'}`}>
+            VOS OBJECTIFS
+        </a>
         <a
           href='https://www.6tm.com/#'
           className={`block mx-4 transition-opacity hover:opacity-70 text-sm
-          ${isScrolled ? 'text-black-900' : 'text-white'}`}>NOS EXPERTISES</a>
+          ${isScrolled ? 'text-black-900' : 'text-white'}`}>
+            NOS EXPERTISES
+        </a>
         <a
           href='https://www.6tm.com/nos-solutions-digitales/'
           className={`block mx-4 transition-opacity hover:opacity-70 text-sm
-          ${isScrolled ? 'text-black-900' : 'text-white'}`}>NOS SOLUTIONS</a>
+          ${isScrolled ? 'text-black-900' : 'text-white'}`}>
+            NOS SOLUTIONS
+        </a>
         <a
           href='https://www.6tm.com/nos-realisations/'
           className={`block mx-4 transition-opacity hover:opacity-70 text-sm
-          ${isScrolled ? 'text-black-900' : 'text-white'}`}>NOS RÉALISATIONS</a>
+          ${isScrolled ? 'text-black-900' : 'text-white'}`}>
+            NOS RÉALISATIONS
+        </a>
         <Button type='invert' link='https://www.6tm.com/nous-contacter'>
           NOUS CONTACTER
         </Button>
@@ -68,7 +79,7 @@ const Header: React.FC = () => {
         flex flex-col font-regular'>
           <Menu.Item>
             <a className='text-black-900 hover:opacity-80' href='#'>
-              TROMBISCOPE
+              TROMBINOSCOPE
             </a>
           </Menu.Item>
           <Menu.Item>
