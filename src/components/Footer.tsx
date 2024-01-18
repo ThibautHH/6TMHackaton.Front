@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import logoWhite from '../assets/logo-6tm-white.png';
+import logoWhite from '../assets/logo-6tm-white.svg';
 import linkedin from '../assets/linkedin.svg';
 import youtube from '../assets/ytb.svg';
 import { HeartIcon } from '@heroicons/react/24/solid';
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Footer: FunctionComponent = () => {
   const navigate = useNavigate();
   return (
-    <footer className='bg-black-900 text-white py-12 px-40'>
+    <footer className='bg-black-900 text-white py-12 px-40 z-10'>
       <div className='flex mx-auto flex-col lg:flex-row justify-between
       px-9 md:px-28 py-4'>
         <div className='h-full w-fit flex-col mb-5'>
@@ -16,7 +16,7 @@ const Footer: FunctionComponent = () => {
             <img
               src={logoWhite}
               alt='logo'
-              className='h-full w-20 cursor-pointer'/>
+              className='h-full w-52 cursor-pointer'/>
           </a>
           <div className='flex flex-row gap-x-2 py-2'>
             <div className='rounded-full bg-black-800 hover:opacity-70'>

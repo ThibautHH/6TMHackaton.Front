@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import logoBlack from '../assets/logo-6tm-black.png';
-import logoWhite from '../assets/logo-6tm-white.png';
+import logoBlack from '../assets/logo-6tm-black.svg';
+import logoWhite from '../assets/logo-6tm-white.svg';
 import Button from './Button';
 import { Menu } from '@headlessui/react';
 
@@ -31,7 +31,7 @@ const Header: React.FC = () => {
       ${isScrolled ? 'bg-white' : 'bg-black-900'}`}>
       <a onClick={() => navigate('/')}>
         <img
-          className='w-28 h-full cursor-pointer'
+          className='w-72 h-full cursor-pointer'
           src={isScrolled ? logoBlack : logoWhite}
           alt='logo'/></a>
       <div className="items-center hidden lg:flex font-regular">
