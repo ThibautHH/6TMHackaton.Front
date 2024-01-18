@@ -32,6 +32,11 @@ const Button: FC<ButtonProps> = ({
     text-black-900 disabled:hover:bg-white border-2 px-10 \
     border-black-900 disabled:hover:text-black-900';
     break;
+  case 'danger':
+    style += 'bg-red-500 hover:bg-opacity-0 shadow-sm text-white \
+    border-red-500 disabled:hover:bg-red-500 px-10 border-2 hover:text-red-500 \
+    disabled:hover:text-white';
+    break;
   case 'text':
     style += 'text-black-900 hover:text-opacity-80 disabled:hover:text-secondary-500';
     break;

@@ -46,7 +46,7 @@ const List: FunctionComponent = () => {
     );
     const fetchData = async () => {
       const data = await getEmployees();
-      console.log('data', data);
+      console.info('data', data);
     };
     fetchData();
   }, [input, agences, teams, jobs]);

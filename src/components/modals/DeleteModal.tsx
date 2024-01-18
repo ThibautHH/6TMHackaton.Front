@@ -1,17 +1,18 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import {
   PencilSquareIcon,
+  TrashIcon,
   XMarkIcon
 } from '@heroicons/react/24/solid';
 
-interface UpdateUserModalProps {
+interface DeleteUserModalProps {
   children: React.ReactNode;
   title: string;
   subtitle?: string;
   close?: () => void;
 }
 
-const UpdateUserModal: FunctionComponent<UpdateUserModalProps> = ({
+const DeleteUserModal: FunctionComponent<DeleteUserModalProps> = ({
   children, title, subtitle, close
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -39,8 +40,8 @@ const UpdateUserModal: FunctionComponent<UpdateUserModalProps> = ({
           <div className='relative bg-black-25 rounded-lg shadow border-2
           border-black-100 pb-6 px-6 pt-4 text-center flex flex-col items-center'>
             <div className='flex flex-row justify-end items-center w-full h-fit'>
-              <div className='flex flex-row w-full items-center text-black-900'>
-                <PencilSquareIcon className='w-6 h-6 mr-2'/>
+              <div className='flex flex-row w-full items-center text-red-500'>
+                <TrashIcon className='w-6 h-6 mr-2'/>
                 <p className='text-lg font-regular'>
                   {title}
                 </p>
@@ -72,4 +73,4 @@ const UpdateUserModal: FunctionComponent<UpdateUserModalProps> = ({
   );
 };
 
-export default UpdateUserModal;
+export default DeleteUserModal;

@@ -9,11 +9,12 @@ import {
 interface Values {
   id: number,
   text: string,
-  disabled?: boolean
+  disabled?: boolean,
+  _id?: string
 }
 
 interface DropdownProps {
-  value?: Values,
+  value?: Values | null,
   // eslint-disable-next-line no-unused-vars
   onChange: (value: Values) => void,
   values: Values[],

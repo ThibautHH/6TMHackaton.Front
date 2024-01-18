@@ -19,7 +19,7 @@ interface CustomAlertProps {
 }
 
 const CustomAlert: FunctionComponent<CustomAlertProps> = ({
-  message, type, button, title, href, buttonTitle, className
+  message, type, button, title, buttonTitle, className
 }) => {
   const [open, setOpen] = React.useState(true);
   let alertStyle = 'h-fit ';

@@ -10,7 +10,7 @@ async function getTeams() {
     }
   };
   const response = await axios.request(config).then((response) => {
-    return response.data.data;
+    return response;
   }).catch((error) => {
     return error.response;
   });

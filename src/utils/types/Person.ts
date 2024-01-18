@@ -2,7 +2,7 @@ interface Person {
     nom: string;
     prenom: string;
     poste: string;
-    equipe: string;
+    equipe?: string;
     agence: string;
     photo_pro?: string;
     photo_fun?: string;
