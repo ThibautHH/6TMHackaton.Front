@@ -15,6 +15,7 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/solid';
 import {
+  Alert,
   Button,
   DeleteUserModal,
   Dropdown,
@@ -65,6 +66,14 @@ const Admin: FunctionComponent = () => {
   const [teams, setTeams] = useState<Team[]>([]);
   const user = AuthUser();
   const navigate = useNavigate();
+  const [alert, setAlert] = useState({text: '', type: '', title: ''});
+
+  const handleAlert = (text: string, type: string, title: string) => {
+    setAlert({text: text, type: type, title: title});
+    setTimeout(() => {
+      setAlert({text: '', type: '', title: ''});
+    }, 5000);
+  };
 
   useEffect(() => {
     const fetchPremises = async () => {
@@ -149,6 +158,16 @@ const Admin: FunctionComponent = () => {
 
   return (
     <Layout>
+      <div className='relative w-full p-5 h-full'>
+        {alert.text !== '' && (
+          <Alert
+            title={alert.title}
+            type={alert.type}
+            message={alert.text}
+            className='absolute bottom-0 z-[1000] w-full'
+          />
+        )}
+      </div>
       {modalState === 'delete' && (
         <DeleteUserModal
           title='Supprimer un utilisateur'
@@ -167,6 +186,10 @@ const Admin: FunctionComponent = () => {
                   if (response.status === 204) {
                     setModalState(null);
                     window.location.reload();
+                  } else {
+                    handleAlert(
+                      response.data.message, 'alert', 'Une erreur est survenue'
+                    );
                   }
                 }}
               >
@@ -248,6 +271,7 @@ const Admin: FunctionComponent = () => {
                   />
                   <Button
                     type='secondary'
+                    disabled={!createInputValue}
                     onClick={async () => {
                       const newAgence: Premise = {
                         city: createInputValue
@@ -264,6 +288,10 @@ const Admin: FunctionComponent = () => {
                             _id: response.data['@id']
                           }
                         ]);
+                      } else {
+                        handleAlert(
+                          response.data.message, 'alert', 'Une erreur est survenue'
+                        );
                       }
                       return 0;
                     }}
@@ -296,60 +324,70 @@ const Admin: FunctionComponent = () => {
                 }}
               />
               {createInput === 'equipe' && (
-                <div className='flex flex-row gap-2 w-full justify-between'>
-                  <Input
-                    type='text'
-                    required
-                    placeholder="Nom de l'équipe"
-                    id='equipe'
-                    value={createInputValue}
-                    onChange={(e) => setCreateInputValue(e.target.value)}
-                  />
-                  <Dropdown
-                    title='Agence'
-                    required
-                    values={agencesValues}
-                    value={createListValue}
-                    onChange={(e) => {
-                      setCreateListValue(e as {
-                        id: number, text: string, _id: string
-                      });
-                    }}
-                  />
-                  <Button
-                    type='secondary'
-                    onClick={async () => {
-                      if (!createListValue)
-                        return;
-                      const newTeam: Team = {
-                        name: createInputValue,
-                        premise: createListValue?._id as string
-                      };
-                      const response = await createTeam(newTeam, user?.token);
-                      if (response.status === 201) {
-                        setCreateInputValue('');
-                        setCreateInput(null);
-                        setTeamsValues([
-                          ...teamsValues,
-                          {
-                            id: teamsValues.length + 1,
-                            text: createInputValue,
-                            _id: response.data['@id']
-                          }
-                        ]);
-                      }
-                    }}
-                  >
-                    <PlusIcon className='w-5 h-5' />
-                    Ajouter
-                  </Button>
-                  <Button
-                    type='invert'
-                    onClick={() => setCreateInput(null)}
-                  >
-                    <XMarkIcon className='w-5 h-5' />
-                    Annuler
-                  </Button>
+                <div className='flex flex-col gap-2 w-full'>
+                  <div className='flex flex-row gap-2 w-full justify-between'>
+                    <Input
+                      type='text'
+                      required
+                      placeholder="Nom de l'équipe"
+                      title="Nom de l'équipe"
+                      id='equipe'
+                      value={createInputValue}
+                      onChange={(e) => setCreateInputValue(e.target.value)}
+                    />
+                    <Dropdown
+                      title='Agence'
+                      required
+                      values={agencesValues}
+                      value={createListValue}
+                      onChange={(e) => {
+                        setCreateListValue(e as {
+                          id: number, text: string, _id: string
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className='flex flex-row gap-2'>
+                    <Button
+                      type='secondary'
+                      disabled={!createInputValue || !createListValue}
+                      onClick={async () => {
+                        if (!createListValue)
+                          return;
+                        const newTeam: Team = {
+                          name: createInputValue,
+                          premise: createListValue?._id as string
+                        };
+                        const response = await createTeam(newTeam, user?.token);
+                        if (response.status === 201) {
+                          setCreateInputValue('');
+                          setCreateInput(null);
+                          setTeamsValues([
+                            ...teamsValues,
+                            {
+                              id: teamsValues.length + 1,
+                              text: createInputValue,
+                              _id: response.data['@id']
+                            }
+                          ]);
+                        } else {
+                          handleAlert(
+                            response.data.message, 'alert', 'Une erreur est survenue'
+                          );
+                        }
+                      }}
+                    >
+                      <PlusIcon className='w-5 h-5' />
+                      Ajouter
+                    </Button>
+                    <Button
+                      type='invert'
+                      onClick={() => setCreateInput(null)}
+                    >
+                      <XMarkIcon className='w-5 h-5' />
+                      Annuler
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>
@@ -382,6 +420,7 @@ const Admin: FunctionComponent = () => {
                   />
                   <Button
                     type='secondary'
+                    disabled={!createInputValue}
                     onClick={() => {
                       setUpdatingUser({
                         ...updatingUser,
@@ -414,6 +453,8 @@ const Admin: FunctionComponent = () => {
               <Button
                 type='secondary'
                 className='w-full'
+                disabled={!updatingUser.name || !updatingUser.firstName ||
+                !updatingUser.team || !updatingUser.position}
                 onClick={async () => {
                   const newUser: Employee = {
                     name: updatingUser.name,
@@ -425,6 +466,10 @@ const Admin: FunctionComponent = () => {
                   console.info(response);
                   if (response.status === 201) {
                     setModalState(null);
+                  } else {
+                    handleAlert(
+                      response.data.message, 'alert', 'Une erreur est survenue'
+                    );
                   }
                   return 0;
                 }}
@@ -507,6 +552,7 @@ const Admin: FunctionComponent = () => {
                   />
                   <Button
                     type='secondary'
+                    disabled={!createInputValue}
                     onClick={async () => {
                       const newAgence: Premise = {
                         city: createInputValue
@@ -523,6 +569,10 @@ const Admin: FunctionComponent = () => {
                             _id: response.data['@id']
                           }
                         ]);
+                      } else {
+                        handleAlert(
+                          response.data.message, 'alert', 'Une erreur est survenue'
+                        );
                       }
                       return 0;
                     }}
@@ -555,42 +605,59 @@ const Admin: FunctionComponent = () => {
                 }}
               />
               {createInput === 'equipe' && (
-                <div className='flex flex-row gap-2 w-full justify-between'>
-                  <Input
-                    type='text'
-                    required
-                    placeholder="Nom de l'équipe"
-                    id='equipe'
-                    value={createInputValue}
-                    onChange={(e) => setCreateInputValue(e.target.value)}
-                  />
-                  <Button
-                    type='secondary'
-                    onClick={() => {
-                      setUpdatingUser({
-                        ...updatingUser,
-                        team: createInputValue
-                      });
-                      setTeamsValues([
-                        ...teamsValues,
-                        {
-                          id: teamsValues.length + 1,
-                          text: createInputValue
-                        }
-                      ]);
-                      setCreateInput(null);
-                    }}
-                  >
-                    <PlusIcon className='w-5 h-5' />
-                    Ajouter
-                  </Button>
-                  <Button
-                    type='invert'
-                    onClick={() => setCreateInput(null)}
-                  >
-                    <XMarkIcon className='w-5 h-5' />
-                    Annuler
-                  </Button>
+                <div className='flex flex-col gap-2 w-full'>
+                  <div className='flex flex-row gap-2 w-full justify-between'>
+                    <Input
+                      type='text'
+                      required
+                      placeholder="Nom de l'équipe"
+                      title="Nom de l'équipe"
+                      id='equipe'
+                      value={createInputValue}
+                      onChange={(e) => setCreateInputValue(e.target.value)}
+                    />
+                    <Dropdown
+                      title='Agence'
+                      required
+                      values={agencesValues}
+                      value={createListValue}
+                      onChange={(e) => {
+                        setCreateListValue(e as {
+                          id: number, text: string, _id: string
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className='flex flex-row gap-2'>
+                    <Button
+                      type='secondary'
+                      disabled={!createInputValue || !createListValue}
+                      onClick={() => {
+                        setUpdatingUser({
+                          ...updatingUser,
+                          team: createInputValue
+                        });
+                        setTeamsValues([
+                          ...teamsValues,
+                          {
+                            id: teamsValues.length + 1,
+                            text: createInputValue
+                          }
+                        ]);
+                        setCreateInput(null);
+                      }}
+                    >
+                      <PlusIcon className='w-5 h-5' />
+                      Ajouter
+                    </Button>
+                    <Button
+                      type='invert'
+                      onClick={() => setCreateInput(null)}
+                    >
+                      <XMarkIcon className='w-5 h-5' />
+                      Annuler
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>
@@ -621,6 +688,7 @@ const Admin: FunctionComponent = () => {
                   />
                   <Button
                     type='secondary'
+                    disabled={!createInputValue}
                     onClick={() => {
                       setUpdatingUser({
                         ...updatingUser,
@@ -654,6 +722,8 @@ const Admin: FunctionComponent = () => {
             <Button
               type='secondary'
               className='w-full'
+              disabled={!updatingUser.name || !updatingUser.firstName ||
+              !updatingUser.team || !updatingUser.position}
               onClick={async () => {
                 const updatedUser: Employee = {
                   name: updatingUser.name,
@@ -669,6 +739,10 @@ const Admin: FunctionComponent = () => {
                 if (response.status === 200) {
                   setModalState(null);
                   window.location.reload();
+                } else {
+                  handleAlert(
+                    response.data.message, 'alert', 'Une erreur est survenue'
+                  );
                 }
                 return 0;
               }}

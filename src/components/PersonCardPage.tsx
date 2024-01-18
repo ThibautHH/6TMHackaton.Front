@@ -1,8 +1,8 @@
 import React from 'react';
-import {Person} from '../utils/types/';
+import { Employee } from '../utils/types/';
 import logo from '../assets/6tm_logo.jpeg';
 
-const PersonCardPage: React.FC<{person: Person}> = ({ person }) => {
+const PersonCardPage: React.FC<{person: Employee}> = ({ person }) => {
 
   return (
     <div className='relative group w-fit h-fit'>
@@ -12,16 +12,16 @@ const PersonCardPage: React.FC<{person: Person}> = ({ person }) => {
         className='w-56 md:w-96 rounded-lg overflow-hidden transition-all
         z-40 relative h-full border-2 border-secondary-500 group-hover:scale-102'
       >
-        {person.photo_fun && person.photo_pro ? (
+        {person.casualPicture && person.professionalPicture ? (
           <>
             <img
-              src={person.photo_pro}
-              alt={person.nom}
+              src={person.professionalPicture}
+              alt={person.name}
               className='group-hover:hidden flex'
             />
             <img
-              src={person.photo_fun}
-              alt={person.nom}
+              src={person.casualPicture}
+              alt={person.name}
               className='group-hover:flex hidden'
             />
           </>

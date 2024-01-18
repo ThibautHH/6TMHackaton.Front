@@ -44,7 +44,13 @@ const Dropdown: FunctionComponent<DropdownProps> = ({
         bg-black-100 border-black-200 placeholder-black-400 text-black-900
         focus:ring-secondary-500 outline-none focus:border-secondary-500
         disabled:opacity-50 border-2 text-left min-h-11'>
-          <span className='block truncate'>{value?.text || ''}</span>
+          {value?.text ? (
+            <span className='block truncate'>{value.text}</span>
+          ) : (
+            <span className='block truncate text-black-400'>
+              Sélectionner une valeur
+            </span>
+          )}
           <span className='pointer-events-none absolute inset-y-0 right-0 flex
           items-center pr-2'>
             <ChevronUpDownIcon

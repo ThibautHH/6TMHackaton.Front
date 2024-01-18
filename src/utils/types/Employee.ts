@@ -7,6 +7,8 @@ interface Employee {
   position: string,
   team: string,
   premise?: Premise,
+  professionalPicture?: string,
+  casualPicture?: string,
   '@context'?: string | object,
   '@id'?: string,
   '@type'?: string

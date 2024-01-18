@@ -20,7 +20,15 @@ const ListSelect: FunctionComponent<ListSelectProps> = ({
           focus:ring-secondary-500 outline-none focus:border-secondary-500 truncate pr-8
           disabled:opacity-50 h-11 text-left font-regular overflow-hidden leading-6
           flex items-center'>
-          {selectedValues.map((value) => value.name).join(', ')}
+          {selectedValues.length <= 0 ? (
+            <span className='block truncate text-black-400'>
+              Sélectionner une ou plusieurs valeurs
+            </span>
+          ) : (
+            <span className='block truncate'>
+              {selectedValues.map((value) => value.name).join(', ')}
+            </span>
+          )}
           <ChevronUpDownIcon className='w-5 h-5 absolute right-2 top-2.5' />
         </Listbox.Button>
         <Transition

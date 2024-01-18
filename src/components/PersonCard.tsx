@@ -1,9 +1,11 @@
 import React from 'react';
-import {Person} from '../utils/types/';
+import { Employee } from '../utils/types/';
 import logo from '../assets/6tm_logo.jpeg';
 import { useNavigate } from 'react-router-dom';
 
-const PersonCard: React.FC<{person: Person, id: number }> = ({ person, id }) => {
+const employeeCard: React.FC<{employee: Employee, id: number | undefined }> = ({
+  employee, id
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -16,17 +18,17 @@ const PersonCard: React.FC<{person: Person, id: number }> = ({ person, id }) => 
         className='w-52 rounded-lg overflow-hidden cursor-pointer transition-all
         z-40 relative h-full border-2 border-secondary-500 group-hover:scale-102'
       >
-        {person.photo_fun && person.photo_pro ? (
+        {employee.professionalPicture && employee.casualPicture ? (
           <>
             <img
-              src={person.photo_pro}
-              alt={person.nom}
+              src={employee.professionalPicture}
+              alt={employee.name}
               className='group-hover:hidden flex mb-5'
               loading='lazy'
             />
             <img
-              src={person.photo_fun}
-              alt={person.nom}
+              src={employee.casualPicture}
+              alt={employee.name}
               className='group-hover:flex hidden mb-5'
               loading='lazy'
             />
@@ -38,12 +40,12 @@ const PersonCard: React.FC<{person: Person, id: number }> = ({ person, id }) => 
         )}
         <div className='bg-white w-full text-black text-center
         font-medium h-fit p-2 absolute bottom-0'>
-          <p className=''>{person.prenom}</p>
-          <p className='text-xs'>{person.nom}</p>
+          <p className=''>{employee.firstName}</p>
+          <p className='text-xs'>{employee.name}</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default PersonCard;
+export default employeeCard;
