@@ -31,7 +31,7 @@ const Header: React.FC = () => {
       ${isScrolled ? 'bg-white' : 'bg-black-900'}`}>
       <a onClick={() => navigate('/')}>
         <img
-          className='w-60 h-full cursor-pointer'
+          className='w-64 h-full cursor-pointer'
           src={isScrolled ? logoBlack : logoWhite}
           alt='logo'/></a>
       <div className="items-center hidden lg:flex font-regular">
