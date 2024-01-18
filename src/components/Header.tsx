@@ -75,8 +75,7 @@ const Header: React.FC = () => {
           ${isScrolled ? 'text-black-900' : 'text-black-25'}`} />
         </Menu.Button>
         <Menu.Items className='absolute right-0 w-64 mt-2 origin-top-right
-        bg-black-0 gap-4 rounded-md shadow-lg p-4
-        flex flex-col font-regular'>
+        bg-black-0 gap-4 rounded-md shadow-lg p-4 flex flex-col font-regular'>
           <Menu.Item>
             <a className='text-black-900 hover:opacity-80' href='#'>
               TROMBINOSCOPE
