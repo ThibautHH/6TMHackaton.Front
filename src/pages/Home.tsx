@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import Button from '../components/Button';
 import Layout from './Layout';
-import test from '../assets/svgexport-1.svg';
+import logo from '../assets/svgexport-1.svg';
 
 const Home: FunctionComponent = () => {
   return (
     <Layout>
-      <div className='flex flex-row relative'>
+      <div className='flex flex-col lg:flex-row relative'>
         <div className='flex flex-col justify-items-center gap-y-5 py-28 z-50'>
           <div className='flex flex-col gap-x-2'>
             <p className='text-7xl font-semibold'>Créons <strong>ensemble </strong></p>
@@ -39,7 +39,7 @@ const Home: FunctionComponent = () => {
         </div>
         <img
           className='ml-96 absolute z-0 -top-[500px] -left-24'
-          src={test}
+          src={logo}
           alt='logo'/>
       </div>
     </Layout>
