@@ -2,9 +2,9 @@ interface Team {
     id?: number,
     name: string,
     premise: string,
-    _id?: string,
-    _type?: string,
-    _context?: string
+    '@id'?: string,
+    '@type'?: string,
+    '@context'?: string
 }
 
 export default Team;
