@@ -35,6 +35,7 @@ import {
 } from '../utils/api';
 import { AuthUser } from '../utils';
 import { useNavigate } from 'react-router-dom';
+import Graph from '../components/Graph';
 
 interface Values {
   id: number,
@@ -57,7 +58,6 @@ const Admin: FunctionComponent = () => {
   const [createInput, setCreateInput] = useState<'agence' | 'equipe' |
   'poste' | null>(null);
   const [createInputValue, setCreateInputValue] = useState<string>('');
-  const [createListValue, setCreateListValue] = useState<Values | null>(null);
   const [agencesValues, setAgencesValues] = useState<Values[]>([]);
   const [teamsValues, setTeamsValues] = useState<Values[]>([]);
   const [jobsValues, setJobsValues] = useState<{
@@ -938,6 +938,9 @@ const Admin: FunctionComponent = () => {
             Créer une équipe
           </Button>
         </div>
+      </div>
+      <div className='bg-black-25 rounded-lg shadow border-2 border-black-100 mt-10'>
+        <Graph data={data} />
       </div>
     </Layout>
   );
