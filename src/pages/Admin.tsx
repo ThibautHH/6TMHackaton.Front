@@ -940,7 +940,7 @@ const Admin: FunctionComponent = () => {
         </div>
       </div>
       <div className='bg-black-25 rounded-lg shadow border-2 border-black-100 mt-10'>
-        <Graph data={data} />
+        <Graph data={data} teamsValue={teams} premisesValue={premises} />
       </div>
     </Layout>
   );
